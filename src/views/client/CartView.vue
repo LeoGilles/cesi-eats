@@ -2,15 +2,16 @@
     <div class="cart">
         <div class="articles">
             <h1>Pannier</h1>
-            <div class="adresse">
+            <div class="deliveryAdresse">
                 <p>32 rue du gigot</p>
-                <button>Modifier</button>
+                <button @click="changeAdresse()">Modifier</button>
+
             </div>
 
             <div class="article">
-                <h2>Article</h2>
+                <h2>Articles</h2>
                 <div class="details">
-
+                    <ProductCart/>
                 </div>
             </div>
         </div>
@@ -41,19 +42,26 @@
 </template>
 
 <script>
+    import ProductCart from "@/components/ProductCart";
     export default {
         name: "CartUser",
+        components: {ProductCart},
+        methods: {
+            changeAdresse() {
+                console.log('t')
+            }
+        }
     }
 </script>
 
 <style lang="scss" scoped>
     .cart {
-        display: flex;
         padding: 2% 5%;
 
         .articles {
-            .adresse {
+            .deliveryAdresse {
                 display: flex;
+                justify-content: space-between;
                 width: 500px;
                 border-bottom: 1px solid #4D90A0;
 
@@ -62,12 +70,31 @@
                 }
 
                 button {
+                    padding: 0 10px;
+                    margin: 5px;
                     border: none;
-                    background-color: #FFF;
+                    border-radius: 10px;
+                    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+                    box-shadow: 10px 10px 60px #c0c0c0,
+                    -10px -10px 60px #ffffff;
+                }
+
+                button:active {
+                    background: #ffffff;
+                    box-shadow: inset 20px 20px 60px #d9d9d9,
+                    inset -20px -20px 60px #ffffff;
+
                 }
             }
 
             .article {
+                padding-top: 10px;
+                display: flex;
+                flex-direction: column;
+
+                h2 {
+                    text-align: left;
+                }
                 .details {
                     display: flex;
                 }
@@ -92,15 +119,18 @@
                 justify-content: flex-end;
             }
         }
+    }
 
-        @media (max-width: 899px) {
-            .cart {
-            }
+    @media (max-width: 899px) {
+        .cart {
+
         }
+    }
 
-        @media (min-width: 900px) {
-            .cart {
-            }
+    @media (min-width: 900px) {
+        .cart {
+            display: flex;
+            justify-content: space-between;
         }
     }
 </style>

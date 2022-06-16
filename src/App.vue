@@ -15,6 +15,7 @@
     </div>
 
     <router-link to="/cart">Panier</router-link>
+    <router-link to="/suivi">suivicmd</router-link>
   </nav>
   <router-view />
   <div>
