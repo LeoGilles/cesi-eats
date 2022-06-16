@@ -33,6 +33,7 @@
 
 <style lang="scss" scoped>
     .footer {
+        margin-top: 20px;
         padding-top: 20px;
         padding-bottom: 50px;
         border-top: 1px solid #4D90A0;
