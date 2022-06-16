@@ -26,7 +26,8 @@
     /* eslint-disable */
     import {defineComponent} from 'vue';
     import ProductTile from '@/components/ProductTile.vue'; // @ is an alias to /src
-    import PopularRestaurant from '@/components/PopularRestaurant.vue'; // @ is an alias to /src
+    import PopularRestaurant from '@/components/PopularRestaurant.vue';
+    import {mapActions, mapState} from "vuex"; // @ is an alias to /src
 
     export default defineComponent({
         name: 'HomeView',
@@ -34,6 +35,12 @@
             ProductTile,
             PopularRestaurant
 
+        },
+        computed:{
+          ...mapState([
+              'count',
+              'popularMeals',
+          ]),
         },
         data() {
             return {
@@ -96,10 +103,17 @@
             }
         },
         methods: {
-            test(newTest: any) {
+            ...mapActions([
+                'setPopularMeals',
+                'increment'
+            ]),
+            test() {
                 console.log('test')
-                console.log(newTest)
-            }
+                this.increment();
+            },
+        },
+        mounted() {
+            console.log('test')
         }
     });
 </script>
