@@ -33,6 +33,14 @@ const routes: Array<RouteRecordRaw> = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/loginUser.vue')
     },
+    {
+        path: '/suivi',
+        name: 'suivi',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/client/TrackingView.vue')
+    },
 ]
 
 const router = createRouter({
