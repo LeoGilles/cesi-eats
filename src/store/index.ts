@@ -3,7 +3,8 @@ import { createStore } from 'vuex'
 const store = createStore({
   state: {
     count: 0,
-    popularMeals:{},
+    popularMeals:[{}],
+    token: ''
   },
 
 
@@ -13,7 +14,9 @@ const store = createStore({
     increment (state) {
       state.count++
     },
-
+    addtoken(state,tokenString){
+      state.token = tokenString
+    },
     setPopularMeals (state, popularMeals) {
       console.log('test mounted')
       state.popularMeals.push(popularMeals)
@@ -24,7 +27,9 @@ const store = createStore({
     increment (context) {
       context.commit('increment')
     },
-
+    setToken(context,tokenString){
+      context.commit('addtoken',tokenString)
+    },
     setPopularMeals(context){
       const popularMeals= [
         {burgerTest: {

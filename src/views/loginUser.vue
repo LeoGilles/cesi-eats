@@ -58,6 +58,7 @@
     import {
         useCookies
     } from "vue3-cookies";
+    import store from '../store';
 
     export default {
         name: 'LoginUser',
@@ -159,7 +160,7 @@
                     "UsersMail": this.UsersMail,
                     "UsersPassword": this.UsersPassword
                 });
-
+                
                 var config = {
                     method: 'post',
                     url: 'http://localhost:10432/api/Login',
@@ -174,10 +175,12 @@
                         console.log(response.data['token']);
                         this.cookies.set("Token", response.data['token'], '1h',{httpOnly: true});
                         
-                        this.$emit("updateToken");
-
+                        store.commit('addtoken',response.data['token'])
+                  
                         this.$router.push("home")
-                    })
+                    }
+                    
+                    )
                     .catch(function (error) {
                         console.log(error);
                     });
