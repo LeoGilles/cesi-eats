@@ -39,12 +39,12 @@
                 <v-btn color="error" class="mr-4" @click="reset2">
                     Cancel
                 </v-btn>
-                <v-btn variant="plain"  @click="Switch">
+                <v-btn variant="plain" @click="Switch">
                     Don't have an account ?
                 </v-btn>
             </v-form>
 
-            <v-btn  @click="testToken">
+            <v-btn @click="testToken">
                 test
             </v-btn>
         </v-card>
@@ -58,8 +58,7 @@
     import {
         useCookies
     } from "vue3-cookies";
-    import store from '../store';
-
+    import store from '../store'
     export default {
         name: 'LoginUser',
         data: () => ({
@@ -155,12 +154,12 @@
                     });
             },
             LoginUser() {
-                
+
                 const data = JSON.stringify({
                     "UsersMail": this.UsersMail,
                     "UsersPassword": this.UsersPassword
                 });
-                
+
                 var config = {
                     method: 'post',
                     url: 'http://localhost:10432/api/Login',
@@ -172,19 +171,21 @@
                 };
                 axios(config)
                     .then(response => {
-                        console.log(response.data['token']);
-                        this.cookies.set("Token", response.data['token'], '1h',{httpOnly: true});
-                        
+
+                        this.cookies.set("Token", response.data['token'], '1h', {
+                            httpOnly: true
+                        });
+
+                        this.changeMsg(response.data['token'])
                         store.commit('addtoken',response.data['token'])
-                  
                         this.$router.push("home")
-                    }
-                    
-                    )
+                    })
                     .catch(function (error) {
                         console.log(error);
                     });
-
+            },
+            changeMsg(txt) {
+                this.$emit("message", txt);
             }
 
         }

@@ -17,6 +17,9 @@ const store = createStore({
     addtoken(state,tokenString){
       state.token = tokenString
     },
+    deltoken(state){
+      state.token = ''
+    },
     setPopularMeals (state, popularMeals) {
       console.log('test mounted')
       state.popularMeals.push(popularMeals)

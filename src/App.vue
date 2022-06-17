@@ -4,20 +4,23 @@
 
     <input placeholder="Restaurant, type, ..." type="text">
     <input placeholder="Adresse" type="text">
-    <router-link v-if="token == ''" @click="refresh" to="/loginUser">Connexion</router-link>
+    <div v-if="this.token == '' ">
+      <router-link to="/loginUser">Connexion
+      </router-link>
+    </div>
     <div v-else class="dropdown">
       <div>my account</div>
       <div class="dropdown-link">
         <router-link to="/account">Mon compte</router-link>
         <router-link to="/orders">Commandes</router-link>
-        <router-link to="/orders">Déconnexion</router-link>
+        <v-btn @click="LogOut">Déconnexion</v-btn>
       </div>
     </div>
 
     <router-link to="/cart">Panier</router-link>
     <router-link to="/suivi">suivicmd</router-link>
   </nav>
-  <router-view/>
+  <router-view @message="setMessage" />
   <div>
     <FooterComponent />
   </div>
@@ -73,10 +76,13 @@
   import {
     useCookies
   } from "vue3-cookies";
-  import store from './store';
+  import store from './store'
+  import {
+    ref
+  } from 'vue'
   export default {
     components: {
-       FooterComponent
+      FooterComponent
     },
     setup() {
       const {
@@ -87,16 +93,20 @@
       };
     },
     data: () => ({
-      token: store.state.token,
+      token: ref(''),
     }),
-  computed()
-  {
-    this.token = store.state.token
-  },
+    computed(){
+      this.token = store.state.token
+    },
     methods: {
-        refresh(){
-          console.log(store.state.token)
-        }
+      LogOut() {
+        store.commit('deltoken')
+        this.token = ref('')
+      },
+      setMessage(msg) {
+        this.token = ref(msg);
+      }
     }
+
   }
 </script>
