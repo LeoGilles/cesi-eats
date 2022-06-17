@@ -1,16 +1,73 @@
 import { createStore } from 'vuex'
 
-export default createStore({
+const store = createStore({
   state: {
-    populaMeals: [],
-    popoularRestaurants: [],
+    count: 0,
+    popularMeals:[{}],
+    token: ''
   },
+
+
   getters: {
   },
   mutations: {
+    increment (state) {
+      state.count++
+    },
+    addtoken(state,tokenString){
+      state.token = tokenString
+    },
+    setPopularMeals (state, popularMeals) {
+      console.log('test mounted')
+      state.popularMeals.push(popularMeals)
+      console.log(state.popularMeals)
+    }
   },
   actions: {
+    increment (context) {
+      context.commit('increment')
+    },
+    setToken(context,tokenString){
+      context.commit('addtoken',tokenString)
+    },
+    setPopularMeals(context){
+      const popularMeals= [
+        {burgerTest: {
+          nom: 'Burger',
+          img: '../assets/buger.webp',
+          restaurantId: 1,
+          price: 12.2,
+          description: "Boeuf, tomate, pain, salade"
+        }},
+        {burgerTest2: {
+          nom: 'Burger 2',
+          img: '../assets/buger.webp',
+          restaurantId: 1,
+          price: 12.2,
+          description: "Boeuf, tomate, pain, salade"
+        }},
+        {burgerTest3: {
+          nom: 'Burger 3',
+          img: '../assets/buger.webp',
+          restaurantId: 1,
+          price: 12.2,
+          description: "Boeuf, tomate, pain, saladeBoeuf, tomate, pain, saladeBoeuf, tomate, pain, salade"
+        }},
+       { burgerTest4: {
+          nom: 'Burger 4',
+          img: '../assets/buger.webp',
+          restaurantId: 1,
+          price: 12.2,
+          description: "Boeuf, tomate, pain, salade"
+        }}
+      ];
+      context.commit('setPopularMeals', popularMeals)
+    }
   },
+
   modules: {
   }
+
 })
+
+export default store

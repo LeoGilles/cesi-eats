@@ -6,7 +6,7 @@ import vuetify from './plugins/vuetify'
 
 const store = require('./store')
 
-const app = createApp(App).use(store).use(router).use(vuetify)
+const app = createApp(App).use(store).use(store).use(router).use(vuetify)
 
 
 app.mount('#app')

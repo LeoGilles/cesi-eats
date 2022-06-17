@@ -4,9 +4,9 @@
 
     <input placeholder="Restaurant, type, ..." type="text">
     <input placeholder="Adresse" type="text">
-    <router-link v-if="token == null" to="/loginUser">Connexion</router-link>
+    <router-link v-if="token == ''" @click="refresh" to="/loginUser">Connexion</router-link>
     <div v-else class="dropdown">
-      <div>UserName</div>
+      <div>my account</div>
       <div class="dropdown-link">
         <router-link to="/account">Mon compte</router-link>
         <router-link to="/orders">Commandes</router-link>
@@ -15,8 +15,9 @@
     </div>
 
     <router-link to="/cart">Panier</router-link>
+    <router-link to="/suivi">suivicmd</router-link>
   </nav>
-  <router-view />
+  <router-view/>
   <div>
     <FooterComponent />
   </div>
@@ -69,11 +70,33 @@
 </style>
 <script>
   import FooterComponent from "@/components/FooterComponent";
-
+  import {
+    useCookies
+  } from "vue3-cookies";
+  import store from './store';
   export default {
     components: {
-      FooterComponent
+       FooterComponent
     },
-
+    setup() {
+      const {
+        cookies
+      } = useCookies();
+      return {
+        cookies
+      };
+    },
+    data: () => ({
+      token: store.state.token,
+    }),
+  computed()
+  {
+    this.token = store.state.token
+  },
+    methods: {
+        refresh(){
+          console.log(store.state.token)
+        }
+    }
   }
 </script>
