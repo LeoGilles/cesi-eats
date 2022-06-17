@@ -108,12 +108,9 @@
                 'increment'
             ]),
             test() {
-                console.log('test')
+                
                 this.increment();
             },
-        },
-        mounted() {
-            console.log('test')
         }
     });
 </script>

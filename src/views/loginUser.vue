@@ -20,7 +20,7 @@
                 <v-btn color="error" class="mr-4" @click="reset1">
                     Cancel
                 </v-btn>
-                <v-btn variant="plain" class="mr-1" @click="Switch">
+                <v-btn variant="plain" @click="Switch">
                     Log In
                 </v-btn>
             </v-form>
@@ -39,21 +39,17 @@
                 <v-btn color="error" class="mr-4" @click="reset2">
                     Cancel
                 </v-btn>
-                <v-btn variant="plain" class="mr-1" @click="Switch">
+                <v-btn variant="plain"  @click="Switch">
                     Don't have an account ?
                 </v-btn>
             </v-form>
+
+            <v-btn  @click="testToken">
+                test
+            </v-btn>
         </v-card>
 
-        <v-snackbar v-model="snackbar">
-            {{ textSnack }}
 
-            <template v-slot:action="{ attrs }">
-                <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
-                    Close
-                </v-btn>
-            </template>
-        </v-snackbar>
     </div>
 </template>
 
@@ -62,6 +58,7 @@
     import {
         useCookies
     } from "vue3-cookies";
+
     export default {
         name: 'LoginUser',
         data: () => ({
@@ -82,8 +79,6 @@
             DateOfJoining: '',
             PhotoFileName: '',
             Roles: null,
-            snackbar: false,
-            textSnack: '',
             items: [
                 "Client", "Livreur", "Restaurateur"
             ],
@@ -96,6 +91,7 @@
                 cookies
             };
         },
+
         methods: {
             reset1() {
                 this.$refs.form.reset()
@@ -106,6 +102,20 @@
             Switch() {
                 this.form1State = !this.form1State
                 this.form2State = !this.form2State
+            },
+            testToken() {
+                var config = {
+                    method: 'get',
+                    url: 'http://localhost:10432/api/Users',
+                    withCredentials: true,
+                };
+                axios(config)
+                    .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             },
             SubmitCreate() {
                 var today = new Date();
@@ -131,23 +141,20 @@
 
                 var config = {
                     method: 'post',
-                    url: 'http://localhost:5000/api/Users',
+                    url: 'http://localhost:10432/api/Users',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     data: data
                 };
                 axios(config)
-                    .then(function () {
-                        this.textSnack = "Successfully added User"
-                        this.snackbar = true;
-                    })
+                    .then(function () {})
                     .catch(function (error) {
                         console.log(error);
                     });
             },
             LoginUser() {
-
+                
                 const data = JSON.stringify({
                     "UsersMail": this.UsersMail,
                     "UsersPassword": this.UsersPassword
@@ -155,18 +162,21 @@
 
                 var config = {
                     method: 'post',
-                    url: 'http://localhost:5000/api/Login',
+                    url: 'http://localhost:10432/api/Login',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     data: data,
 
                 };
-
                 axios(config)
                     .then(response => {
                         console.log(response.data['token']);
-                        this.cookies.set("Token", response.data['token']);
+                        this.cookies.set("Token", response.data['token'], '1h',{httpOnly: true});
+                        
+                        this.$emit("updateToken");
+
+                        this.$router.push("home")
                     })
                     .catch(function (error) {
                         console.log(error);
