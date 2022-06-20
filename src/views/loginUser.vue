@@ -161,6 +161,7 @@
 
                         this.changeMsg(response.data['token'])
                         store.commit('addtoken',response.data['token'])
+                        store.commit('addUserId',response.data['UsersId'])
                         this.$router.push("/")
                     })
                     .catch(function (error) {

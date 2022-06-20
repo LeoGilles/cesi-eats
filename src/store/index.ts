@@ -4,7 +4,15 @@ const store = createStore({
   state: {
     count: 0,
     popularMeals:[{}],
-    token: ''
+    token: '',
+    userId:0,
+    MyResto:{
+      Nom:'',
+      Description:'',
+      Img:'',
+      Article:[ {}],
+      Menu:[ {}]
+    }
   },
 
 
@@ -17,9 +25,24 @@ const store = createStore({
     addtoken(state,tokenString){
       state.token = tokenString
     },
+    addUserId(state,userId){
+      state.userId = userId
+    },
     deltoken(state){
       state.token = ''
     },
+    delUserId(state)
+    {
+      state.userId = 0;
+    },
+    setMyRestoName(state, MyResto){
+      state.MyResto.Nom = MyResto.Nom
+      state.MyResto.Description = MyResto.Description
+      state.MyResto.Img = MyResto.Img
+      state.MyResto.Article = MyResto.Article
+      state.MyResto.Menu = MyResto.Menu
+    },
+    
     setPopularMeals (state, popularMeals) {
       console.log('test mounted')
       state.popularMeals.push(popularMeals)

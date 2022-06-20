@@ -86,9 +86,6 @@
             },
 
         },
-        beforeMount() {
-            console.log('test')
-        }
 
 
     }

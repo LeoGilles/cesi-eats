@@ -107,8 +107,7 @@
                 'setPopularMeals',
                 'increment'
             ]),
-            test() {
-                
+            test() {               
                 this.increment();
             },
         }
