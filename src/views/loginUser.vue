@@ -44,9 +44,6 @@
                 </v-btn>
             </v-form>
 
-            <v-btn @click="testToken">
-                test
-            </v-btn>
         </v-card>
 
 
@@ -102,20 +99,6 @@
             Switch() {
                 this.form1State = !this.form1State
                 this.form2State = !this.form2State
-            },
-            testToken() {
-                var config = {
-                    method: 'get',
-                    url: 'http://localhost:10432/api/Users',
-                    withCredentials: true,
-                };
-                axios(config)
-                    .then(function (response) {
-                        console.log(JSON.stringify(response.data));
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
             },
             SubmitCreate() {
                 var today = new Date();
@@ -178,7 +161,7 @@
 
                         this.changeMsg(response.data['token'])
                         store.commit('addtoken',response.data['token'])
-                        this.$router.push("home")
+                        this.$router.push("/")
                     })
                     .catch(function (error) {
                         console.log(error);
