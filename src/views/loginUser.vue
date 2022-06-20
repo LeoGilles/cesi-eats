@@ -175,7 +175,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .body {
         margin: 20px;
         padding: 50px;

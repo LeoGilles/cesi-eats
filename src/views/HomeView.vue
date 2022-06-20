@@ -108,13 +108,13 @@
                 'increment'
             ]),
             test() {
-                
+
                 this.increment();
             },
         }
     });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 
     .home {
         padding: 20px;

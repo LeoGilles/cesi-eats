@@ -4,13 +4,13 @@
 
     <input placeholder="Restaurant, type, ..." type="text">
     <input placeholder="Adresse" type="text">
-    <div v-if="this.token == '' ">
+    <div v-if="this.token != '' ">
             <v-btn @click="RedirectLogIn" color="primary" dark>
         Log In
       </v-btn>
     </div>
     <div v-else class="dropdown">
-      <div>my account</div>
+      <router-link to="/account">my account</router-link>
       <div class="dropdown-link">
         <router-link to="/account">Mon compte</router-link>
         <router-link to="/orders">Commandes</router-link>
