@@ -4,8 +4,8 @@
 
     <input placeholder="Restaurant, type, ..." type="text">
     <input placeholder="Adresse" type="text">
-    <div v-if="this.token == '' ">
-            <v-btn @click="RedirectLogIn" color="primary" dark>
+    <div v-if="this.token == '' || this.token == null ">
+      <v-btn @click="RedirectLogIn" color="primary" dark>
         Log In
       </v-btn>
     </div>
@@ -18,6 +18,7 @@
       </div>
     </div>
 
+    <router-link to="/RestaurateurPage">Resto</router-link>
     <router-link to="/cart">Panier</router-link>
     <router-link to="/suivi">suivicmd</router-link>
   </nav>
@@ -78,6 +79,7 @@
     useCookies
   } from "vue3-cookies";
   import store from './store'
+  import axios from 'axios';
   import {
     ref
   } from 'vue'
@@ -96,19 +98,56 @@
     data: () => ({
       token: ref(''),
     }),
-    computed(){
+    computed() {
       this.token = store.state.token
+    },
+    mounted() {
+      console.log("t" + this.token)
+      if (this.cookies.isKey("Token") != null) {
+        store.state.token = this.cookies.get("Token")
+        this.token = store.state.token
+        this.DecodeToken()
+      }
     },
     methods: {
       LogOut() {
         store.commit('deltoken')
         this.token = ref('')
       },
-            RedirectLogIn() {
+      RedirectLogIn() {
         this.$router.push("/loginUser")
       },
       setMessage(msg) {
         this.token = ref(msg);
+      },
+      DecodeToken() {
+        if (this.cookies.isKey("Token")) {
+
+          // store.state.token = this.cookies.get("Token")
+          // this.setMessage(store.state.token)
+
+          let data = JSON.stringify({
+            "token": this.cookies.get("Token")
+          });
+
+          let config = {
+            method: 'post',
+            url: 'http://localhost:10432/api/Login/JWT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            data: data
+          };
+
+          axios(config)
+            .then((response) => {
+              store.commit("addUserId", response.data["UsersId"])
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+
       }
     }
 

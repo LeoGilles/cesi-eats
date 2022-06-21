@@ -42,6 +42,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "about" */ '../views/client/TrackingView.vue')
     },
     {
+        path: '/RestaurateurPage',
+        name: 'RestaurateurPage',
+        component: () => import(/* webpackChunkName: "about" */ '../views/RestaurateurPage.vue')
+    },
+    {
         path: '/account',
         name: 'monCompte',
         // route level code-splitting
