@@ -35,9 +35,7 @@
     .managementClient{
         border-top: 1px solid #4D90A0;
         padding: 20px 5%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+
 
         .managementClientActions{
             display: flex;
@@ -59,8 +57,11 @@
 
     @media (max-width: 899px) {
         .managementClientActions{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             button{
-                margin: 10px;
+                margin: 30px 10px 10px 10px;
                 padding: 20px;
             }
         }
@@ -69,6 +70,9 @@
 
     @media (min-width: 900px) {
         .managementClient{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             .managementClientActions{
 
                 button{

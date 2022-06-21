@@ -66,7 +66,7 @@
     @media (max-width: 899px) {
         .commercialViewBtn {
             button {
-                margin: 10px;
+                margin: 20px;
                 padding: 20px;
             }
         }
