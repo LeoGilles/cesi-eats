@@ -6,20 +6,36 @@
 </template>
 
 <script>
+    import store from '../store'
+    import axios from 'axios';
     export default {
         name: "DeleteAccount",
 
-        methods:{
-            deleteAccount(){
-                console.log('delete')
+        methods: {
+            deleteAccount() {
+                let config = {
+                    method: 'delete',
+                    url: 'http://localhost:10432/api/Users/' + store.state.userId,
+                    headers: {}
+                };
+
+                axios(config)
+                    .then(() => {
+                        this.$router.push("/")
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-    .deleteAccount{
+    .deleteAccount {
         padding: 5%;
+
         button {
             padding: 1cm;
             margin: 50px 0;
@@ -27,14 +43,14 @@
             border-radius: 20px;
             background: #af4646;
             box-shadow: 20px 20px 60px #bebebe,
-            -20px -20px 60px #fff;
+                -20px -20px 60px #fff;
         }
 
         button:active {
             border-radius: 20px;
             background: #af4646;
             box-shadow: inset 20px 20px 60px #953c3c,
-            inset -20px -20px 60px #c95151;
+                inset -20px -20px 60px #c95151;
         }
     }
 </style>

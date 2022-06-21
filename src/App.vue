@@ -113,6 +113,7 @@
       LogOut() {
         store.commit('deltoken')
         this.token = ref('')
+        this.$router.push("/")
       },
       RedirectLogIn() {
         this.$router.push("/loginUser")

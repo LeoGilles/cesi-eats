@@ -1,39 +1,81 @@
 <template>
     <div class="editAccount">
-        <div class="editAccountInput">
-            <label for="name">Nom : </label>
-            <p :style="editName ? edit : null"> nom du gars </p>
-            <input v-model="newName" type="text" id="name" name="name" :style="!editName ? edit : null">
-            <p class="closeMap" @click="editing('name')"> {{editName ? 'Enregistrer' : 'Editer'}} </p>
-        </div>
+        <v-form v-model="valid" lazy-validation>
+            <v-text-field v-model="Name" label="Nom" required>
+            </v-text-field>
 
-        <div class="editAccountInput">
-            <label for="mail">Adresse mail :</label>
-            <p :style="editMail ? edit : null"> email du gars </p>
-            <input v-model="newMail" type="email" id="mail" name="mail" :style="!editMail ? edit : null">
-            <p class="closeMap" @click="editing('mail')"> {{editMail ? 'Enregistrer' : 'Editer'}} </p>
-        </div>
+            <v-text-field v-model="Mail" :rules="emailRules" label="E-mail" required></v-text-field>
+        </v-form>
 
+        <v-select v-model="Roles" :items="items" 
+            :rules="[v => !!v || 'Role is required']" label="Roles" required>
+        </v-select>
+
+        <v-btn :disabled="!valid" color="success" class="mr-4" @click="EditUser">
+            Save
+        </v-btn>
 
     </div>
 
 </template>
 
 <script>
+    import store from '../store'
+    import axios from 'axios';
+    import {
+        ref
+    } from 'vue'
     export default {
         name: "editAccount",
         data() {
             return {
+                valid: true,
                 editName: false,
                 editMail: false,
-                newName: '',
-                newMail: '',
+                Name: ref(''),
+                Mail: ref(''),
+                Roles: ref(''),
+                items: [
+                    "Client", "Livreur", "Restaurateur"
+                ],
+                emailRules: [
+                    v => !!v || 'E-mail is required',
+                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                ],
                 edit: {
                     display: "none",
                 }
             }
         },
+        mounted() {
+            let config = {
+                method: 'get',
+                url: 'http://localhost:10432/api/Users/' + store.state.userId,
+                headers: {}
+            };
 
+            axios(config)
+                .then((response) => {
+                    this.Name = response.data[0]["UsersName"]
+
+                    this.Mail = response.data[0]["UsersMail"]
+
+                    console.log("n "+response.data[0]["Roles"])
+
+                    if (response.data[0]["Roles"] == 2) {
+                        this.Roles = "Livreur"
+                    }
+                    else if (response.data[0]["Roles"] == 3) {
+                        this.Roles = "Restaurateur"
+                    } else {
+                        this.Roles = "Client"
+                    }
+                    console.log("r "+ this.Roles)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         methods: {
             editing(edit) {
                 if (edit === 'name') {
@@ -52,15 +94,50 @@
                     return;
 
             },
+            EditUser() {
+                let temp
+                if (this.Roles == "Livreur") {
+                    temp = 2
+                }
+                else if (this.Roles == "Restaurateur") {
+                    temp = 3
+                }else {
+                    temp = 1
+                }
+                console.log("temp "+temp)
+                let data = JSON.stringify({
+                    "UsersId": store.state.userId,
+                    "UsersName": this.Name,
+                    "UsersMail": this.Mail,
+                    "Roles": temp
+                });
+                let config = {
+                    method: 'put',
+                    url: 'http://localhost:10432/api/Users',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: data
+                };
+
+
+                axios(config)
+                    .then(() => {
+                        this.$router.push("/")
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         }
 
     }
 </script>
 
 <style scoped lang="scss">
-
     .editAccount {
         padding: 5%;
+
         .editAccountInput {
             padding: .5cm;
             display: flex;
@@ -81,5 +158,4 @@
             }
         }
     }
-
 </style>

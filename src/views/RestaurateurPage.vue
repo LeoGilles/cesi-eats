@@ -10,11 +10,14 @@
                 <v-row no-gutters>
                     <v-dialog v-model="dialog" persistent>
                         <template v-slot:activator="{ props }">
-                            <v-btn color="primary" v-bind="props">
+                            <v-btn color="primary" @click="AddArticle" v-bind="props">
                                 Add Article
                             </v-btn>
                         </template>
                         <v-card class="ArticleCard">
+                            <v-card-title>
+                                <span class="text-h5">Article :</span>
+                            </v-card-title>
                             <v-text-field v-model="ArticleName" :counter="20" :rules="nameRules"
                                 label="Nom de l'article" required>
                             </v-text-field>
@@ -27,17 +30,24 @@
                             <v-file-input show-size label="File input (Max 1MB)" v-model="ArticleImg"></v-file-input>
                             <v-spacer></v-spacer>
                             <v-card-actions class="centerBtn">
-                                <v-btn color="blue-darken-1" text @click="dialog = false">
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue-darken-1" text @click="CloseDialog">
                                     Close
                                 </v-btn>
+
                                 <v-btn color="blue-darken-1" variant="outlined" text @click="SaveArticle">
                                     Save
+                                </v-btn>
+
+                                <v-btn variant="outlined" v-if="this.ArticleId != ''" text @click="DeleteArticle()">
+                                    Delete
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
                 </v-row>
 
+                <h1>Mes Plats</h1>
                 <v-row no-gutters class="overflow-x-auto" style="width: auto">
                     <v-col class="colCard" :key="article" v-for="article in MyArticle">
                         <v-card class="mx-auto" max-width="300px" height="250px">
@@ -52,7 +62,9 @@
                             </v-card-subtitle>
 
                             <v-card-actions>
-                                <v-btn color="orange-lighten-2" variant="text">
+                                <v-btn color="orange-lighten-2"
+                                    @click="EditArticle(article._id,article.Nom,article.Description,article.Prix)"
+                                    variant="text">
                                     Edit Article
                                 </v-btn>
                                 <v-spacer></v-spacer>
@@ -62,16 +74,14 @@
                             </v-card-actions>
                         </v-card>
                     </v-col>
-
                 </v-row>
+
 
                 <v-row no-gutters>
                     <v-btn :disabled="!valid" color="success" class="mr-4" @click="SubmitSave">
                         Save
                     </v-btn>
-                    <v-btn color="error" class="mr-4" @click="reset1">
-                        Cancel
-                    </v-btn>
+
                 </v-row>
             </v-form>
         </v-card>
@@ -92,13 +102,15 @@
 
         data: () => ({
             valid: true,
-            RestoName: '',
-            ArticleName: '',
-            ArticleImg: '',
-            ArticlePrice: 0,
-            ArticleDesc: '',
+            RestoName: ref(''),
+            ArticleName: ref(''),
+            ArticleImg: ref(''),
+            ArticlePrice: ref(0),
+            ArticleDesc: ref(''),
             RestoImg: '',
+            ArticleId: ref(''),
             token: ref(''),
+            select: [],
             nameRules: [
                 v => !!v || 'Name is required',
                 v => (v && v.length <= 20) || 'Name must be less than 20 characters',
@@ -109,15 +121,13 @@
             ],
             PhotoFileName: '',
             dialog: false,
-            MyResto: ref({}),
             MyArticle: ref([{}]),
-            RestoDesc: ''
+            RestoDesc: ref('')
         }),
         computed() {
-            this.MyResto = store.state.MyResto
+            this.RestoName = store.state.MyResto.Nom
+            this.RestoDesc = store.state.MyResto.Description
             this.MyArticle = store.state.MyResto.Article
-            console.log(this.MyArticle)
-            this.MyMenu = store.state.MyResto.Menu
         },
         setup() {
             const {
@@ -128,42 +138,102 @@
             };
         },
         mounted() {
+            this.refreshResto()
             this.refreshArticle()
         },
         methods: {
             SaveArticle() {
-console.log(this.ArticleImg[0])
-                if (this.ArticleImg[0].name != null) {
-                    let data = new FormData();
-                    data.append('Img', this.ArticleImg[0]);
+                if (this.ArticleId == '') {
 
-                    let config = {
+                    const data = JSON.stringify({
+                        "Nom": this.ArticleName,
+                        "Img": this.ArticleImg,
+                        "Prix": this.ArticlePrice,
+                        "Description": this.ArticleDesc
+                    });
+
+                    var config1 = {
                         method: 'post',
-                        url: 'http://localhost:3000/api/Uploads',
+                        url: 'http://localhost:3000/api/Article/' + store.state.userId,
                         headers: {
-                            ...data.getHeaders()
+                            'Content-Type': 'application/json'
                         },
-                        data: data
+                        data: data,
                     };
 
-                    axios(config)
-                        .then((response) => {
-                            console.log(response.data);
+                    axios(config1)
+                        .then(() => {
+                            this.refreshArticle()
+                            this.dialog = false
+                            this.ArticleId = ''
+
                         })
-                        .catch((error) => {
+                        .catch(function (error) {
                             console.log(error);
                         });
+
+                } else {
+                 
+                    const data2 = JSON.stringify({
+                        "_id": this.ArticleId,
+                        "Nom": this.ArticleName,
+                        "Img": this.ArticleImg,
+                        "Prix": this.ArticlePrice,
+                        "Description": this.ArticleDesc
+                    });
+
+                    var config2 = {
+                        method: 'put',
+                        url: 'http://localhost:3000/api/Article/'+ store.state.userId,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: data2,
+                    };
+
+                    axios(config2)
+                        .then(() => {
+                            this.refreshArticle()
+                            this.dialog = false
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
                 }
+            },
+            EditArticle(_id, Nom, Description, Prix) {
 
+                this.ArticleId = _id
+                this.ArticleName = Nom
+                this.ArticleDesc = Description
+                this.ArticlePrice = Prix
+
+                this.dialog = true
+
+            },
+            CloseDialog() {
+                this.dialog = false
+                this.ArticleId = ''
+                this.ArticleName = ''
+                this.ArticleDesc = ''
+                this.ArticlePrice = 0
+            },
+            AddArticle() {
+                this.ArticleId = ''
+                this.ArticleName = ''
+                this.ArticleDesc = ''
+                this.ArticlePrice = 0
+
+                this.dialog = true
+            },
+            DeleteArticle() {
                 const data = JSON.stringify({
-                    "Nom": this.ArticleName,
-                    "Img": this.ArticleImg,
-                    "Prix": this.ArticlePrice,
-                    "Description": this.ArticleDesc
+                    "_id": this.ArticleId,
                 });
-
+                console.log(this.ArticleId)
                 var config = {
-                    method: 'post',
+                    method: 'delete',
                     url: 'http://localhost:3000/api/Article/' + store.state.userId,
                     headers: {
                         'Content-Type': 'application/json'
@@ -179,13 +249,50 @@ console.log(this.ArticleImg[0])
                     .catch(function (error) {
                         console.log(error);
                     });
-
             },
             reset1() {
                 this.$refs.form.reset()
             },
             SubmitSave() {
-
+                if (store.state.userId != 0) {
+                    let data = JSON.stringify({
+                        "Nom":  this.RestoName,
+                        "Description": this.RestoDesc
+                    });
+                    let config = {
+                        method: 'put',
+                        url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: data
+                    };
+                    axios(config)
+                        .then(() => {
+                            this.refreshResto()
+                            this.$router.push("/")
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                }
+            },
+            refreshResto() {
+                if (store.state.userId != 0) {
+                    let config = {
+                        method: 'get',
+                        url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                        headers: {}
+                    };
+                    axios(config)
+                        .then((response) => {
+                            store.state.MyResto.Nom = response.data["Nom"];
+                            store.state.MyResto.Description = response.data["Description"]
+                            this.RestoName = store.state.MyResto.Nom
+                            this.RestoDesc = store.state.MyResto.Description
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                }
             },
             refreshArticle() {
                 if (store.state.userId != 0) {
@@ -201,6 +308,7 @@ console.log(this.ArticleImg[0])
                             console.log(error);
                         });
                 }
+
             }
 
 

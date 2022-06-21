@@ -1,6 +1,6 @@
 <template>
     <div class="account">
-        <h1>Bienvenue sur votre compte nom du gars</h1>
+        <h1>Bienvenue sur votre compte {{this.UserName}}</h1>
         <div class="accountPage">
             <div class="accountbtn">
                 <button v-on:click="openMenuAccount('modify')">Modifier</button>
@@ -12,9 +12,9 @@
 
             </div>
             <div class="accountComponentOpen">
-                <edit-account :style="!editButton ? buttonNav : null"/>
-                <delete-account :style="!deleteButton ? buttonNav : null"/>
-                <refer-friend :style="!referButton ? buttonNav : null"/>
+                <edit-account :style="!editButton ? buttonNav : null" />
+                <delete-account :style="!deleteButton ? buttonNav : null" />
+                <refer-friend :style="!referButton ? buttonNav : null" />
             </div>
         </div>
 
@@ -25,32 +25,56 @@
     import EditAccount from "../../components/EditAccount";
     import DeleteAccount from "../../components/DeleteAccount";
     import ReferFriend from "../../components/ReferFriend";
-
+    import store from '../../store'
+    import axios from 'axios';
+     import {
+    ref
+  } from 'vue'
     export default {
         name: "AccountView",
-        components: {ReferFriend, DeleteAccount, EditAccount},
+        components: {
+            ReferFriend,
+            DeleteAccount,
+            EditAccount
+        },
         data() {
             return {
                 editButton: true,
                 deleteButton: false,
                 referButton: false,
+                UserName: ref(''),
                 buttonNav: {
                     display: "none",
                 }
             }
         },
+        mounted() {
+            let config = {
+                method: 'get',
+                url: 'http://localhost:10432/api/Users/'+ store.state.userId,
+                headers: {}
+            };
 
+            axios(config)
+                .then((response) => {
+                    this.UserName = response.data[0]["UsersName"]
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         methods: {
             openMenuAccount(button) {
-                if (button==='modify'){
+                if (button === 'modify') {
                     this.editButton = true;
                     this.deleteButton = false;
                     this.referButton = false;
-                }else if (button==='delete'){
+                } else if (button === 'delete') {
                     this.editButton = false;
                     this.deleteButton = true;
                     this.referButton = false;
-                }else if (button==='refer'){
+                } else if (button === 'refer') {
                     this.editButton = false;
                     this.deleteButton = false;
                     this.referButton = true;
@@ -75,22 +99,22 @@
                     border-radius: 20px;
                     background: linear-gradient(145deg, #cacaca, #f0f0f0);
                     box-shadow: 20px 20px 60px #bebebe,
-                    -20px -20px 60px #ffffff;
+                        -20px -20px 60px #ffffff;
                 }
 
                 button:focus {
                     border-radius: 20px;
                     background: #e0e0e0;
                     box-shadow: inset 20px 20px 60px #bebebe,
-                    inset -20px -20px 60px #ffffff;
+                        inset -20px -20px 60px #ffffff;
                 }
 
-                a{
+                a {
                     color: #3b4a5a;
                 }
             }
 
-            .accountComponentOpen{
+            .accountComponentOpen {
                 width: 100%;
             }
         }
@@ -98,8 +122,8 @@
     }
 
     @media (max-width: 899px) {
-        .accountbtn{
-            button{
+        .accountbtn {
+            button {
                 margin: 10px;
                 padding: 20px;
             }
@@ -108,21 +132,21 @@
     }
 
     @media (min-width: 900px) {
-        .accountPage{
+        .accountPage {
             display: flex;
-            .accountbtn{
+
+            .accountbtn {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
 
-                button{
+                button {
                     min-width: 300px;
                     margin: 20px 0;
                     padding: 1cm;
                 }
-                button:active{
 
-                }
+                button:active {}
             }
         }
     }

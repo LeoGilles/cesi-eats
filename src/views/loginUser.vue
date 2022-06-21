@@ -131,7 +131,9 @@
                     data: data
                 };
                 axios(config)
-                    .then(function () {})
+                    .then(function () {
+                        this.$router.push("/")
+                    })
                     .catch(function (error) {
                         console.log(error);
                     });
