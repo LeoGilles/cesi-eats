@@ -131,12 +131,20 @@
                     data: data
                 };
                 axios(config)
-                    .then(function () {
-                        this.$router.push("/")
+                    .then(response => {
+                        if(response.data["UsersId"] != undefined)
+                        {
+                            this.UsersTemp = response.data["UsersId"]
+                            this.$router.push("/")
+                        }
+                        else{
+                            alert(response.data)
+                        } 
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
+
             },
             LoginUser() {
 
@@ -169,6 +177,26 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            CreateRestaurant(){
+                      let data = JSON.stringify({
+
+                    });
+                    let config = {
+                        method: 'post',
+                        url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: data
+                    };
+                    axios(config)
+                        .then(() => {
+                            this.refreshResto()
+                            this.$router.push("/")
+                        }).catch((error) => {
+                            console.log(error);
+                        });
             },
             changeMsg(txt) {
                 this.$emit("message", txt);

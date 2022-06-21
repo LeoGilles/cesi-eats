@@ -60,8 +60,6 @@
 
                     this.Mail = response.data[0]["UsersMail"]
 
-                    console.log("n "+response.data[0]["Roles"])
-
                     if (response.data[0]["Roles"] == 2) {
                         this.Roles = "Livreur"
                     }
@@ -70,7 +68,7 @@
                     } else {
                         this.Roles = "Client"
                     }
-                    console.log("r "+ this.Roles)
+
                 })
                 .catch((error) => {
                     console.log(error);
@@ -104,7 +102,7 @@
                 }else {
                     temp = 1
                 }
-                console.log("temp "+temp)
+
                 let data = JSON.stringify({
                     "UsersId": store.state.userId,
                     "UsersName": this.Name,
