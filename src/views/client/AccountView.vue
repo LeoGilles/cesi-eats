@@ -66,17 +66,12 @@
         padding: 20px;
 
         .accountPage {
-            display: flex;
+            margin: 20px 0;
 
             .accountbtn {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+
 
                 button {
-                    min-width: 300px;
-                    padding: 1cm;
-                    margin: 20px 0;
                     border-radius: 20px;
                     background: linear-gradient(145deg, #cacaca, #f0f0f0);
                     box-shadow: 20px 20px 60px #bebebe,
@@ -100,5 +95,35 @@
             }
         }
 
+    }
+
+    @media (max-width: 899px) {
+        .accountbtn{
+            button{
+                margin: 10px;
+                padding: 20px;
+            }
+        }
+
+    }
+
+    @media (min-width: 900px) {
+        .accountPage{
+            display: flex;
+            .accountbtn{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                button{
+                    min-width: 300px;
+                    margin: 20px 0;
+                    padding: 1cm;
+                }
+                button:active{
+
+                }
+            }
+        }
     }
 </style>
