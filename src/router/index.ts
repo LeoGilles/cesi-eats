@@ -42,12 +42,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "about" */ '../views/client/TrackingView.vue')
     },
     {
-        path: '/RestaurateurPage',
-        name: 'RestaurateurPage',
+        path: '/account',
+        name: 'monCompte',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/RestaurateurPage.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/client/AccountView.vue')
     },
 ]
 
