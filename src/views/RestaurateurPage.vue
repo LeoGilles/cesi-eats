@@ -128,10 +128,32 @@
             };
         },
         mounted() {
-           this.refreshArticle()
+            this.refreshArticle()
         },
         methods: {
             SaveArticle() {
+console.log(this.ArticleImg[0])
+                if (this.ArticleImg[0].name != null) {
+                    let data = new FormData();
+                    data.append('Img', this.ArticleImg[0]);
+
+                    let config = {
+                        method: 'post',
+                        url: 'http://localhost:3000/api/Uploads',
+                        headers: {
+                            ...data.getHeaders()
+                        },
+                        data: data
+                    };
+
+                    axios(config)
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }
 
                 const data = JSON.stringify({
                     "Nom": this.ArticleName,
@@ -165,22 +187,22 @@
             SubmitSave() {
 
             },
-            refreshArticle(){
-                 if (store.state.userId != 0) {
-                let config = {
-                    method: 'get',
-                    url: 'http://localhost:3000/api/Article/' + store.state.userId,
-                };
-                axios(config)
-                    .then((response) => {
-                        store.state.MyResto.Article = response.data;
-                        this.MyArticle = response.data
-                    }).catch((error) => {
-                        console.log(error);
-                    });
+            refreshArticle() {
+                if (store.state.userId != 0) {
+                    let config = {
+                        method: 'get',
+                        url: 'http://localhost:3000/api/Article/' + store.state.userId,
+                    };
+                    axios(config)
+                        .then((response) => {
+                            store.state.MyResto.Article = response.data;
+                            this.MyArticle = response.data
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                }
             }
-            }
-            
+
 
         }
 
@@ -207,7 +229,8 @@
             align-self: right;
         }
     }
-    .colCard{
+
+    .colCard {
         margin: 10px;
     }
 </style>
