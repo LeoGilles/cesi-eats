@@ -102,7 +102,6 @@
       this.token = store.state.token
     },
     mounted() {
-      console.log("t" + this.token)
       if (this.cookies.isKey("Token") != null) {
         store.state.token = this.cookies.get("Token")
         this.token = store.state.token
@@ -114,6 +113,7 @@
         store.commit('deltoken')
         this.token = ref('')
         this.$router.push("/")
+        this.cookies.remove("Token")
       },
       RedirectLogIn() {
         this.$router.push("/loginUser")

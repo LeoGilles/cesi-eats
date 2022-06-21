@@ -26,7 +26,9 @@
                     .catch((error) => {
                         console.log(error);
                     });
-
+                store.commit('deltoken')
+                this.cookies.remove("Token")
+                this.$router.push("/")
             }
         }
     }
