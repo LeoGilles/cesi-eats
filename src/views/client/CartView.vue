@@ -10,8 +10,8 @@
 
             <div class="article">
                 <h2>Articles</h2>
-                <div class="details">
-                    <ProductCart/>
+                <div class="details" v-for="product in products" :key="product.name">
+                    <ProductCart v-bind:product="product"/>
                 </div>
             </div>
         </div>
@@ -42,14 +42,23 @@
 </template>
 
 <script>
+    import store from "@/store";
     import ProductCart from "@/components/ProductCart";
     export default {
         name: "CartUser",
         components: {ProductCart},
+        data() {
+            return{
+                products: store.getters.getCart
+            }
+        },
         methods: {
             changeAdresse() {
                 console.log('t')
             }
+        },
+        mounted() {
+            console.log(store.getters.getCart)
         }
     }
 </script>

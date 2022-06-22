@@ -1,13 +1,13 @@
 <template>
     <div class="productCart">
         <div class="desProductCart">
-            <p>Burger</p>
+            <p class="productCartName">{{product.nom}}</p>
             <p>Description : </p>
-            <p class="descriptionProductCart">ztgfser, zgsfertzh, grezsfqtghz, agzesfaeg, gsg</p>
+            <p class="descriptionProductCart">{{product.description}}</p>
         </div>
 
         <div class="detailsProductCart">
-            <img alt="image produit" src="../assets/buger.webp"/>
+            <img alt="image produit" :src="product.img"/>
             <select class="quantite" id="qte" name="pets">
                 <option value="">Quantité</option>
                 <option value="dog">1</option>
@@ -16,7 +16,7 @@
                 <option value="parrot">4</option>
                 <option value="spider">5</option>
             </select>
-            <p class="price">23 €</p>
+            <p class="price">{{product.price}} €</p>
         </div>
     </div>
 
@@ -25,7 +25,13 @@
 
 <script>
     export default {
-        name: "ProductCart"
+        name: "ProductCart",
+        props: ['product'],
+        data(){
+            return{
+
+            }
+        }
     }
 </script>
 
@@ -39,6 +45,9 @@
             p {
                 text-align: left;
                 padding: 10px 0;
+            }
+            .productCartName{
+                font-weight: bold;
             }
 
             .descriptionProductCart {

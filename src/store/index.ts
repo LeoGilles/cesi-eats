@@ -12,11 +12,15 @@ const store = createStore({
       Img:'',
       Article:[ {}],
       Menu:[ {}]
-    }
+    },
+    cart: [],
   },
 
 
   getters: {
+    getCart(state){
+      return state.cart
+    }
   },
   mutations: {
     increment (state) {
@@ -42,11 +46,16 @@ const store = createStore({
       state.MyResto.Article = MyResto.Article
       state.MyResto.Menu = MyResto.Menu
     },
-    
+
     setPopularMeals (state, popularMeals) {
       console.log('test mounted')
       state.popularMeals.push(popularMeals)
       console.log(state.popularMeals)
+    },
+
+    setCart (state, product) {
+      // @ts-ignore
+      state.cart.push(product);
     }
   },
   actions: {
