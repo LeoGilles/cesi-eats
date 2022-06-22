@@ -6,7 +6,7 @@
         <p class="ingredient">Ingrédients : {{content.description}}</p>
         <p class="price">Price : {{content.price}}€</p>
         <div class="add">
-            <button class="addToCart" v-on:click="test"><img alt="panier" src="" title="Ajouter au panier"></button>
+            <button class="addToCart" v-on:click="addArticle(content)"><img alt="panier" src="" title="Ajouter au panier"></button>
 
         </div>
     </div>
@@ -15,12 +15,16 @@
 </template>
 
 <script>
+    import store from "@/store";
     export default {
         name: "ProductTile",
         props: ['content'],
         methods: {
-            test() {
-                console.log(this.content)
+            addArticle(product) {
+
+                console.log('cart '+ store.getters.getCart)
+                store.commit('setCart', product);
+                console.log(store.getters.getCart)
             }
         }
     }

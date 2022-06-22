@@ -10,8 +10,8 @@
 
             <div class="article">
                 <h2>Articles</h2>
-                <div class="details">
-                    <ProductCart/>
+                <div class="details" v-for="product in products" :key="product.id">
+                    <ProductCart v-bind:product="product" v-bind:qte="qteProduct(product.id)"/>
                 </div>
             </div>
         </div>
@@ -19,22 +19,22 @@
         <div class="total">
             <div class="section">
                 <p>Commandes : </p>
-                <p>23 €</p>
+                <p>{{totalPriceCmd}} €</p>
             </div>
             <div class="section">
                 <p>Service : </p>
-                <p>2 €</p>
+                <p>{{servicePrice}} €</p>
             </div>
             <div class="section">
                 <p>Livraison : </p>
-                <p>60 €</p>
+                <p>{{deliveryCost}} €</p>
             </div>
             <div class="section">
                 <p>Total : </p>
-                <p>70€</p>
+                <p>{{totalToPaid()}} €</p>
             </div>
             <div class="btn">
-                <button class="command">Commander</button>
+                <button class="command">Payer</button>
             </div>
         </div>
     </div>
@@ -42,14 +42,41 @@
 </template>
 
 <script>
+    import store from "@/store";
     import ProductCart from "@/components/ProductCart";
+
     export default {
         name: "CartUser",
         components: {ProductCart},
+        data() {
+            return {
+                products: store.getters.getProducts,
+                cart: store.getters.getCart,
+                totalPriceCmd: store.getters.getTotalPriceCmd,
+                deliveryCost: 10,
+                servicePrice: 20,
+            }
+        },
         methods: {
             changeAdresse() {
                 console.log('t')
+            },
+
+            qteProduct(id) {
+                let qte = 0
+                for (let i = 0; i < this.cart.length; i++) {
+                    if (this.cart[i].id === id) {
+                        qte++
+                    }
+                }
+                return qte
+            },
+            totalToPaid() {
+                return this.totalPriceCmd + this.deliveryCost + this.servicePrice
             }
+
+        },
+        mounted() {
         }
     }
 </script>
@@ -95,6 +122,7 @@
                 h2 {
                     text-align: left;
                 }
+
                 .details {
                     display: flex;
                 }

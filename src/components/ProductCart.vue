@@ -1,22 +1,20 @@
 <template>
     <div class="productCart">
         <div class="desProductCart">
-            <p>Burger</p>
+            <p class="productCartName">{{product.nom}}</p>
             <p>Description : </p>
-            <p class="descriptionProductCart">ztgfser, zgsfertzh, grezsfqtghz, agzesfaeg, gsg</p>
+            <p class="descriptionProductCart">{{product.description}}</p>
         </div>
 
         <div class="detailsProductCart">
-            <img alt="image produit" src="../assets/buger.webp"/>
-            <select class="quantite" id="qte" name="pets">
-                <option value="">Quantité</option>
-                <option value="dog">1</option>
-                <option value="cat">2</option>
-                <option value="hamster">3</option>
-                <option value="parrot">4</option>
-                <option value="spider">5</option>
-            </select>
-            <p class="price">23 €</p>
+            <img alt="image produit" :src="product.img"/>
+            <p class="qte">
+                <span class="moins" v-on:click="deleteArticle(product)">-</span>
+                {{qte}}
+                <span class="plus" v-on:click="addArticle(product)">+</span>
+            </p>
+            <p class="price">{{product.price}} €</p>
+
         </div>
     </div>
 
@@ -24,8 +22,27 @@
 </template>
 
 <script>
+    import store from "@/store";
+
     export default {
-        name: "ProductCart"
+        name: "ProductCart",
+        props: ['product', 'qte'],
+        data() {
+            return {
+                newQte: 0,
+            }
+        },
+        methods: {
+            test() {
+                console.log(this.newQte)
+            },
+            deleteArticle(product) {
+                store.commit('deleteProductInCart', product)
+            },
+            addArticle(product) {
+                store.commit('setCart', product);
+            },
+        }
     }
 </script>
 
@@ -39,6 +56,10 @@
             p {
                 text-align: left;
                 padding: 10px 0;
+            }
+
+            .productCartName {
+                font-weight: bold;
             }
 
             .descriptionProductCart {
@@ -59,6 +80,11 @@
 
             p {
                 text-align: right;
+            }
+
+            span{
+                padding: 0 5px;
+                cursor: pointer;
             }
         }
     }
