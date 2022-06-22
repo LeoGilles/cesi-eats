@@ -11,7 +11,7 @@
 
         <div class="bestProducts">
             <div class="background"/>
-            <div :key="article.restaurantId" v-for="article in populaMeals">
+            <div :key="article.id" v-for="article in populaMeals">
                 <ProductTile v-bind:content="article"/>
             </div>
 
@@ -46,6 +46,7 @@
             return {
                 populaMeals: {
                     burgerTest: {
+                        id: 1,
                         nom: 'Burger',
                         img: '../assets/buger.webp',
                         restaurantId: 1,
@@ -53,6 +54,7 @@
                         description: "Boeuf, tomate, pain, salade"
                     },
                     burgerTest2: {
+                        id: 2,
                         nom: 'Burger 2',
                         img: '../assets/buger.webp',
                         restaurantId: 1,
@@ -60,6 +62,7 @@
                         description: "Boeuf, tomate, pain, salade"
                     },
                     burgerTest3: {
+                        id: 3,
                         nom: 'Burger 3',
                         img: '../assets/buger.webp',
                         restaurantId: 1,
@@ -67,6 +70,7 @@
                         description: "Boeuf, tomate, pain, saladeBoeuf, tomate, pain, saladeBoeuf, tomate, pain, salade"
                     },
                     burgerTest4: {
+                        id: 4,
                         nom: 'Burger 4',
                         img: '../assets/buger.webp',
                         restaurantId: 1,

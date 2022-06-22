@@ -6,7 +6,7 @@
         <p class="ingredient">Ingrédients : {{content.description}}</p>
         <p class="price">Price : {{content.price}}€</p>
         <div class="add">
-            <button class="addToCart" v-on:click="test(content)"><img alt="panier" src="" title="Ajouter au panier"></button>
+            <button class="addToCart" v-on:click="addArticle(content)"><img alt="panier" src="" title="Ajouter au panier"></button>
 
         </div>
     </div>
@@ -20,7 +20,7 @@
         name: "ProductTile",
         props: ['content'],
         methods: {
-            test(product) {
+            addArticle(product) {
 
                 console.log('cart '+ store.getters.getCart)
                 store.commit('setCart', product);

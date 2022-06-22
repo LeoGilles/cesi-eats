@@ -8,15 +8,13 @@
 
         <div class="detailsProductCart">
             <img alt="image produit" :src="product.img"/>
-            <select class="quantite" id="qte" name="pets">
-                <option value="">Quantité</option>
-                <option value="dog">1</option>
-                <option value="cat">2</option>
-                <option value="hamster">3</option>
-                <option value="parrot">4</option>
-                <option value="spider">5</option>
-            </select>
+            <p class="qte">
+                <span class="moins" v-on:click="deleteArticle(product)">-</span>
+                {{qte}}
+                <span class="plus" v-on:click="addArticle(product)">+</span>
+            </p>
             <p class="price">{{product.price}} €</p>
+
         </div>
     </div>
 
@@ -24,13 +22,26 @@
 </template>
 
 <script>
+    import store from "@/store";
+
     export default {
         name: "ProductCart",
-        props: ['product'],
-        data(){
-            return{
-
+        props: ['product', 'qte'],
+        data() {
+            return {
+                newQte: 0,
             }
+        },
+        methods: {
+            test() {
+                console.log(this.newQte)
+            },
+            deleteArticle(product) {
+                store.commit('deleteProductInCart', product)
+            },
+            addArticle(product) {
+                store.commit('setCart', product);
+            },
         }
     }
 </script>
@@ -46,7 +57,8 @@
                 text-align: left;
                 padding: 10px 0;
             }
-            .productCartName{
+
+            .productCartName {
                 font-weight: bold;
             }
 

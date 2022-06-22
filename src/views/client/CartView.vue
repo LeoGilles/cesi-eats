@@ -10,8 +10,8 @@
 
             <div class="article">
                 <h2>Articles</h2>
-                <div class="details" v-for="product in products" :key="product.name">
-                    <ProductCart v-bind:product="product"/>
+                <div class="details" v-for="product in products" :key="product.id">
+                    <ProductCart v-bind:product="product" v-bind:qte="qteProduct(product.id)"/>
                 </div>
             </div>
         </div>
@@ -49,16 +49,26 @@
         components: {ProductCart},
         data() {
             return{
-                products: store.getters.getCart
+                products: store.getters.getProducts,
+                cart: store.getters.getCart,
             }
         },
         methods: {
             changeAdresse() {
                 console.log('t')
-            }
+            },
+
+            qteProduct(id){
+                let qte = 0
+                for (let i = 0; i < this.cart.length; i++) {
+                    if (this.cart[i].id === id) {
+                        qte++
+                    }
+                }
+                return qte
+            },
         },
         mounted() {
-            console.log(store.getters.getCart)
         }
     }
 </script>
