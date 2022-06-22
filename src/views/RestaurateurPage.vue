@@ -48,7 +48,7 @@
                 </v-row>
 
                 <h1>Mes Plats</h1>
-                <v-row no-gutters class="overflow-x-auto" style="width: auto">
+                <v-row no-gutters class="d-flex flex-wrap" style="width: auto">
                     <v-col class="colCard" :key="article" v-for="article in MyArticle">
                         <v-card class="mx-auto" max-width="300px" height="250px">
                             <v-img :src="article.Img" height="100px" cover></v-img>

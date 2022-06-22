@@ -1,48 +1,118 @@
 <template>
     <div class="referFriend">
-        <h3>Entrer le mail de l'ami que vous voulez parrainer et gagner 10€ sur votre prochaine commande</h3>
-        <input v-model="referMail" type="email" placeholder="example@email.com"/>
-        <button v-on:click="referFriend">Envoyer le parrainage</button>
+        <v-card class="d-flex flex-column mx-auto justify-space-around mb-6">
+            <h3>Entrer le mail de l'ami que vous voulez parrainer et gagner des avantages sur votre prochaine commande
+            </h3>
+            <v-form v-model="valid" lazy-validation>
+                <v-text-field v-model="referMail" :rules="emailRules" label="Amis actuel parrainé :" required></v-text-field>
+            </v-form>
+            <v-btn color="success" @click="referFriend">Valider</v-btn>
+        </v-card>
     </div>
 </template>
 
 <script>
+    import store from '../store'
+    import axios from 'axios';
     export default {
         name: "ReferFriend",
         data() {
             return {
+                valid: true,
                 referMail: '',
+                emailRules: [
+                    v => !!v || 'E-mail is required',
+                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                ],
             }
         },
-        methods:{
-            referFriend(){
-                console.log(this.referMail)
+        mounted() {
+            let config1 = {
+                method: 'get',
+                url: 'http://localhost:3030/api/parrainage/' + store.state.userId,
+            };
+
+            axios(config1)
+                .then((response) => {
+                    this.referMail = response.data["UserMail"]
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        methods: {
+            referFriend() {
+                let config1 = {
+                    method: 'get',
+                    url: 'http://localhost:3030/api/parrainage/' + store.state.userId,
+                };
+
+                axios(config1)
+                    .then((response1) => {
+
+                        if (response1.data["UserIdParrain"] == store.state.userId) {
+                            let data2 = JSON.stringify({
+                                "UserIdParrain": store.state.userId,
+                                "UserMail": this.referMail
+                            })
+                            let config2 = {
+                                method: 'put',
+                                url: 'http://localhost:3030/api/parrainage',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                data: data2
+                            }
+
+                            axios(config2)
+                                .then(() => {
+
+                                    alert("Le parrainage à bien été enregistré")
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                });
+                        } else {
+                            let data3 = JSON.stringify({
+                                "UserIdParrain": store.state.userId,
+                                "UserMail": this.referMail
+                            })
+                            let config3 = {
+                                method: 'post',
+                                url: 'http://localhost:3030/api/parrainage',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                data: data3
+                            }
+
+                            axios(config3)
+                                .then(() => {
+
+                                    alert("Le parrainage à bien été enregistré")
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                });
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+
+
+
+
+
             },
         }
     }
 </script>
 
 <style scoped lang="scss">
-    .referFriend{
+    .referFriend {
         padding: 5%;
+        display: flex;
 
-        input{
-            border: 1px solid black;
-            border-radius: 5px;
-        }
-        button{
-            padding: 30px;
-            margin: 50px;
-            border-radius: 20px;
-            background: linear-gradient(145deg, #cacaca, #f0f0f0);
-            box-shadow: 20px 20px 60px #bebebe,
-            -20px -20px 60px #ffffff;
-        }
-        button:active{
-            border-radius: 20px;
-            background: #e0e0e0;
-            box-shadow: inset 20px 20px 60px #bebebe,
-            inset -20px -20px 60px #ffffff;
-        }
     }
 </style>

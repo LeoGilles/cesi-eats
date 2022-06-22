@@ -5,11 +5,10 @@
             </v-text-field>
 
             <v-text-field v-model="Mail" :rules="emailRules" label="E-mail" required></v-text-field>
-        </v-form>
-
-        <v-select v-model="Roles" :items="items" 
+                <v-select v-model="Roles" :items="items" 
             :rules="[v => !!v || 'Role is required']" label="Roles" required>
         </v-select>
+        </v-form>
 
         <v-btn :disabled="!valid" color="success" class="mr-4" @click="EditUser">
             Save
@@ -73,6 +72,7 @@
                 .catch((error) => {
                     console.log(error);
                 });
+        
         },
         methods: {
             editing(edit) {
