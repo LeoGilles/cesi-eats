@@ -81,6 +81,11 @@
             p {
                 text-align: right;
             }
+
+            span{
+                padding: 0 5px;
+                cursor: pointer;
+            }
         }
     }
 </style>
