@@ -24,14 +24,6 @@ const store = createStore({
     getProducts(state){
       return new Set(state.cart)
     },
-    getTotalPriceCmd(state) {
-      let res = 0
-      for (let i = 0; i < state.cart.length; i++) {
-        // @ts-ignore
-        res += state.cart[i].price
-      }
-      return res
-    },
 
   },
   mutations: {

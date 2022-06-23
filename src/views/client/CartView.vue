@@ -1,40 +1,42 @@
 <template>
     <div class="cart">
         <div class="articles">
-            <h1>Pannier</h1>
+            <h1>Panier</h1>
             <div class="deliveryAdresse">
                 <p>32 rue du gigot</p>
                 <button @click="changeAdresse()">Modifier</button>
 
             </div>
 
-            <div class="article" v-if="products.length > 0">
+            <div class="article" v-if="cart.length > 0">
                 <h2>Articles</h2>
                 <div class="details" v-for="product in products" :key="product.id">
                     <ProductCart v-bind:product="product" v-bind:qte="qteProduct(product.id)"/>
                 </div>
             </div>
             <div class="article" v-else>
-                <p>Vous n'avez pas encore d'article dans votre pannier,<br> <router-link to="/">rendez-vous sur la page d'acceuil</router-link></p>
+                <p>Vous n'avez pas encore d'article dans votre panier,<br>
+                    <router-link to="/">rendez-vous sur la page d'acceuil</router-link>
+                </p>
             </div>
         </div>
 
         <div class="total">
             <div class="section">
                 <p>Commandes : </p>
-                <p>{{totalPriceCmd}} €</p>
+                <p>{{FunTotalPriceCmd()}} €</p>
             </div>
             <div class="section">
                 <p>Service : </p>
-                <p>{{servicePrice}} €</p>
+                <p>{{cart.length>0 ? servicePrice : 0}} €</p>
             </div>
             <div class="section">
                 <p>Livraison : </p>
-                <p>{{deliveryCost}} €</p>
+                <p>{{cart.length>0 ? deliveryCost : 0}} €</p>
             </div>
             <div class="section">
                 <p>Total : </p>
-                <p>{{totalToPaid()}} €</p>
+                <p>{{cart.length>0 ? totalToPaid() : 0}} €</p>
             </div>
             <div class="btn">
                 <button class="paid">Payer</button>
@@ -55,11 +57,12 @@
             return {
                 products: store.getters.getProducts,
                 cart: store.getters.getCart,
-                totalPriceCmd: store.getters.getTotalPriceCmd,
+                totalPriceCmd: 0,
                 deliveryCost: 10,
                 servicePrice: 20,
             }
         },
+
         methods: {
             changeAdresse() {
                 console.log('t')
@@ -74,13 +77,25 @@
                 }
                 return qte
             },
+
+            FunTotalPriceCmd() {
+
+                let res = 0
+                for (let i = 0; i < this.cart.length; i++) {
+                    // @ts-ignore
+                    res += this.cart[i].price
+                }
+                return res
+            },
+
+
             totalToPaid() {
                 return this.totalPriceCmd + this.deliveryCost + this.servicePrice
             }
 
         },
         mounted() {
-            console.log(this.products)
+            console.log(this.cart.length)
         }
     }
 </script>
@@ -139,15 +154,20 @@
             border-radius: 20px;
             margin: 10px;
             padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
 
             .section {
                 display: flex;
                 justify-content: space-between;
                 padding: 20px;
             }
-            .btn{
+
+            .btn {
                 display: flex;
                 justify-content: flex-end;
+
                 .paid {
 
                     padding: 10px 20px;
@@ -158,7 +178,8 @@
                     box-shadow: 10px 10px 60px #c0c0c0,
                     -10px -10px 60px #ffffff;
                 }
-                .paid:active{
+
+                .paid:active {
                     background: #ffffff;
                     box-shadow: inset 20px 20px 60px #d9d9d9,
                     inset -20px -20px 60px #ffffff;

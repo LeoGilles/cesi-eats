@@ -12,14 +12,10 @@
             <router-link to="">Obtenir de l’aide</router-link>
             <router-link to="">Ajoutez votre restaurant</router-link>
             <router-link to="">Devenez coursier-partenaire</router-link>
-            <router-link to="">Restaurants à proximité</router-link>
         </div>
         <div class="importantLinks links">
-            <router-link to="">Fonctionnement des sites et des applications Uber et Uber Eats</router-link>
             <router-link to="">Politique de confidentialité</router-link>
             <router-link to="">Conditions</router-link>
-            <router-link to="">Tarifs</router-link>
-            <router-link to=""> Ne pas vendre mes données (Californie)</router-link>
         </div>
 
     </div>
