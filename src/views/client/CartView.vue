@@ -10,7 +10,7 @@
 
             <div class="article" v-if="cart.length > 0">
                 <h2>Articles</h2>
-                <div class="details" v-for="product in products" :key="product.id">
+                <div class="details" v-for="product in refreshProduct" :key="product.id">
                     <ProductCart v-bind:product="product" v-bind:qte="qteProduct(product.id)"/>
                 </div>
             </div>
@@ -55,14 +55,13 @@
         components: {ProductCart},
         data() {
             return {
-                products: store.getters.getProducts,
+                products: [],
                 cart: store.getters.getCart,
                 totalPriceCmd: 0,
                 deliveryCost: 10,
                 servicePrice: 20,
             }
         },
-
         methods: {
             changeAdresse() {
                 console.log('t')
@@ -85,8 +84,10 @@
                     // @ts-ignore
                     res += this.cart[i].price
                 }
+                this.totalPriceCmd=res
                 return res
             },
+
 
 
             totalToPaid() {
@@ -94,9 +95,12 @@
             }
 
         },
-        mounted() {
-            console.log(this.cart.length)
-        }
+        computed: {
+            refreshProduct(){
+               return new Set(this.cart)
+            }
+        },
+
     }
 </script>
 

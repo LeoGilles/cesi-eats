@@ -21,9 +21,6 @@ const store = createStore({
     getCart(state){
       return state.cart
     },
-    getProducts(state){
-      return new Set(state.cart)
-    },
 
   },
   mutations: {
@@ -64,7 +61,7 @@ const store = createStore({
     deleteProductInCart(state, product){
       // @ts-ignore
       state.cart.splice(state.cart.indexOf(product), 1)
-
+      console.log(state.cart)
     }
   },
   actions: {
