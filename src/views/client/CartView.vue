@@ -8,11 +8,14 @@
 
             </div>
 
-            <div class="article">
+            <div class="article" v-if="products.length > 0">
                 <h2>Articles</h2>
                 <div class="details" v-for="product in products" :key="product.id">
                     <ProductCart v-bind:product="product" v-bind:qte="qteProduct(product.id)"/>
                 </div>
+            </div>
+            <div class="article" v-else>
+                <p>Vous n'avez pas encore d'article dans votre pannier,<br> <router-link to="/">rendez-vous sur la page d'acceuil</router-link></p>
             </div>
         </div>
 
@@ -34,7 +37,7 @@
                 <p>{{totalToPaid()}} €</p>
             </div>
             <div class="btn">
-                <button class="command">Payer</button>
+                <button class="paid">Payer</button>
             </div>
         </div>
     </div>
@@ -77,6 +80,7 @@
 
         },
         mounted() {
+            console.log(this.products)
         }
     }
 </script>
@@ -141,11 +145,27 @@
                 justify-content: space-between;
                 padding: 20px;
             }
-
-            btn {
+            .btn{
                 display: flex;
                 justify-content: flex-end;
+                .paid {
+
+                    padding: 10px 20px;
+                    margin: 10px;
+                    border: none;
+                    border-radius: 10px;
+                    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+                    box-shadow: 10px 10px 60px #c0c0c0,
+                    -10px -10px 60px #ffffff;
+                }
+                .paid:active{
+                    background: #ffffff;
+                    box-shadow: inset 20px 20px 60px #d9d9d9,
+                    inset -20px -20px 60px #ffffff;
+                }
             }
+
+
         }
     }
 
