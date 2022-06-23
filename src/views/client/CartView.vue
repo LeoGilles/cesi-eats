@@ -3,7 +3,7 @@
         <div class="articles">
             <h1>Panier</h1>
             <div class="deliveryAdresse">
-                <p>32 rue du gigot</p>
+                <input type="text" v-model="adressDelivery" :placeholder="adressDelivery"/>
                 <button @click="changeAdresse()">Modifier</button>
 
             </div>
@@ -60,11 +60,12 @@
                 totalPriceCmd: 0,
                 deliveryCost: 10,
                 servicePrice: 20,
+                adressDelivery: '32 rue du gigot',
             }
         },
         methods: {
             changeAdresse() {
-                console.log('t')
+                console.log(this.adressDelivery)
             },
 
             qteProduct(id) {
@@ -115,12 +116,8 @@
                 width: 500px;
                 border-bottom: 1px solid #4D90A0;
 
-                p {
-                    padding: 5%;
-                }
-
                 button {
-                    padding: 0 10px;
+                    padding: 10px;
                     margin: 5px;
                     border: none;
                     border-radius: 10px;
