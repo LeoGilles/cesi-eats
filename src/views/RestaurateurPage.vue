@@ -99,7 +99,6 @@
     } from "vue3-cookies";
     export default {
         name: 'RestaurateurPage',
-
         data: () => ({
             valid: true,
             RestoName: ref(''),

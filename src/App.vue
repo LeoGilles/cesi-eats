@@ -18,7 +18,6 @@
       </div>
     </div>
 
-    <router-link to="/RestaurateurPage">Resto</router-link>
     <router-link to="/cart">Panier</router-link>
     <router-link to="/suivi">suivicmd</router-link>
   </nav>
