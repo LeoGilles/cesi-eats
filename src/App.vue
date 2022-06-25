@@ -4,17 +4,26 @@
 
     <input placeholder="Restaurant, type, ..." type="text">
     <input placeholder="Adresse" type="text">
-    <div v-if="this.token == '' || this.token == null ">
-      <v-btn @click="RedirectLogIn" color="primary" dark>
-        Log In
-      </v-btn>
-    </div>
-    <div v-else class="dropdown">
-      <div>my account</div>
-      <div class="dropdown-link">
-        <router-link to="/account">Mon compte</router-link>
-        <router-link to="/orders">Commandes</router-link>
-        <v-btn @click="LogOut">Déconnexion</v-btn>
+    <div>
+      <div v-if="this.token == '' || this.token == null ">
+        <v-btn @click="RedirectLogIn" color="#4D90A0" dark>
+           <span class="text-white">Log In</span>
+        </v-btn>
+      </div>
+      <div v-else class="flexHori">
+        <div class="dropdown">
+          <v-btn variant="outlined">My account</v-btn>
+          <div class="dropdown-link">
+            <router-link class="routerMargin" to="/account">
+              <v-btn>Mon compte</v-btn>
+            </router-link>
+            <router-link class="routerMargin" to="/orders">
+              <v-btn>Commandes</v-btn>
+            </router-link>
+            <v-btn class="routerMargin" @click="LogOut">Déconnexion</v-btn>
+          </div>
+        </div>
+        <UserNotifications />
       </div>
     </div>
 
@@ -27,7 +36,7 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -43,9 +52,21 @@
     box-shadow: 0px 10px 10px -3px grey;
   }
 
+
+.flexHori{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
   .dropdown {
     position: relative;
     display: inline-block;
+    margin-right: 20px;
+  }
+
+  .routerMargin {
+    margin: 5px;
   }
 
   .dropdown-link {
@@ -56,6 +77,7 @@
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     padding: 12px 16px;
     z-index: 1;
+    border-radius: 10%;
   }
 
   .dropdown:hover .dropdown-link {
@@ -74,6 +96,7 @@
 </style>
 <script>
   import FooterComponent from "@/components/FooterComponent";
+  import UserNotifications from "@/components/UserNotifications"
   import {
     useCookies
   } from "vue3-cookies";
@@ -84,7 +107,8 @@
   } from 'vue'
   export default {
     components: {
-      FooterComponent
+      FooterComponent,
+      UserNotifications
     },
     setup() {
       const {
