@@ -6,7 +6,8 @@
                 <button v-on:click="openMenuAccount('modify')">Modifier</button>
                 <button v-on:click="openMenuAccount('delete')">Supprimer votre compte</button>
                 <button v-on:click="openMenuAccount('refer')">Parrainer un ami</button>
-                <router-link to="/RestaurateurPage" v-if="this.role == 3"><button>Gerer mon restaurant</button></router-link> 
+                <router-link to="/RestaurateurPage" v-if="this.role == 3"><button>Gerer mon restaurant</button>
+                </router-link>
                 <router-link to="/orders">
                     <button>Votre historique de commandes</button>
                 </router-link>
@@ -28,9 +29,9 @@
     import ReferFriend from "../../components/ReferFriend";
     import store from '../../store'
     import axios from 'axios';
-     import {
-    ref
-  } from 'vue'
+    import {
+        ref
+    } from 'vue'
     export default {
         name: "AccountView",
         components: {
@@ -50,27 +51,27 @@
                 }
             }
         },
-        computed(){
+        computed() {
             this.role = store.state.userRole
             console.log(this.role)
         },
         mounted() {
             let config = {
                 method: 'get',
-                url: 'http://localhost:10432/api/Users/'+ store.state.userId,
+                url: 'http://localhost:10432/api/Users/' + store.state.userId,
                 headers: {}
             };
 
             axios(config)
                 .then((response) => {
                     this.UserName = response.data[0]["UsersName"]
-                    store.commit('SetUserRole',response.data[0]["Roles"])
+                    store.commit('SetUserRole', response.data[0]["Roles"])
                     this.role = store.state.userRole
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-                
+
         },
         methods: {
             openMenuAccount(button) {
@@ -89,6 +90,7 @@
                 }
 
             },
+            
         }
     }
 </script>

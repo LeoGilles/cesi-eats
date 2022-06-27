@@ -137,6 +137,10 @@
             };
         },
         mounted() {
+            if(store.state.userRole != 3)
+            {
+                this.$router.push("/")
+            }
             this.refreshResto()
             this.refreshArticle()
         },
