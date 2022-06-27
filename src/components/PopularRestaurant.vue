@@ -1,5 +1,5 @@
 <template>
-    <h2>{{content.nom}}</h2>
+    <h2>{{content.Nom}}</h2>
     <div id="v-carousel" type="x/template">
         <div class="card-carousel-wrapper">
             <div :disabled="atHeadOfList" @click="moveCarousel(-1)" class="card-carousel--nav__left"></div>
@@ -23,47 +23,23 @@
 
 <script>
     import ProductTile from "./ProductTile";
-
+    import axios from 'axios';
+     import {
+        ref
+    } from 'vue'
     export default {
         name: "PopularRestaurant",
         components: {ProductTile,},
+        
         props: ['content'],
         data() {
             return {
                 currentOffset: 0,
+                isFetching: true,
                 windowSize: 3,
                 paginationFactor: 220,
-                meals: {
-                    burgerTest: {
-                        nom: 'Burger',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    },
-                    burgerTest2: {
-                        nom: 'Burger 2',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    },
-                    burgerTest3: {
-                        nom: 'Burger 3',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, saladeBoeuf, tomate, pain, saladeBoeuf, tomate, pain, salade"
-                    },
-                    burgerTest4: {
-                        nom: 'Burger 4',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    }
-                },
-            }
+                meals: ref([{}])
+                }
         },
         computed: {
             atEndOfList() {
@@ -72,6 +48,19 @@
             atHeadOfList() {
                 return this.currentOffset === 0;
             },
+        },
+        mounted(){
+              let config = {
+                        method: 'get',
+                        url: 'http://localhost:3000/api/Article/' + this.content.RestaurantId,
+                    };
+                    axios(config)
+                        .then((response) => {
+
+                            this.meals = response.data;
+                        }).catch((error) => {
+                            console.log(error);
+                        });
         },
         methods: {
             moveCarousel(direction) {

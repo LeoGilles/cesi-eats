@@ -12,16 +12,16 @@
                 <v-list-item v-for="notification in NotificationsList" :key="notification">
                     <v-list-item-title>{{ notification.Message }}</v-list-item-title>
                     <v-spacer></v-spacer>
-                    <btn class="marginIcon" @click="delNotifications(notification._id)" stacked>
+                    <button class="marginIcon" @click="delNotifications(notification._id)" stacked>
                         <font-awesome-icon icon="fa-delete-left" style="color:darkred;" />
-                    </btn>
+                    </button>
                 </v-list-item>
             </v-list>
         </v-menu>
 
-        <btn class="text-none iconSize" @click="refreshData" v-else stacked>
+        <button class="text-none iconSize" @click="refreshData" v-else stacked>
             <v-icon class="iconSize" >mdi-bell-outline</v-icon>
-        </btn>
+        </button>
     </div>
 </template>
 

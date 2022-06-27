@@ -8,9 +8,19 @@
 <script>
     import store from '../store'
     import axios from 'axios';
+    import {
+        useCookies
+    } from "vue3-cookies";
     export default {
         name: "DeleteAccount",
-
+        setup() {
+            const {
+                cookies
+            } = useCookies();
+            return {
+                cookies
+            };
+        },
         methods: {
             deleteAccount() {
                 let config = {
@@ -21,9 +31,23 @@
 
                 axios(config)
                     .then(() => {
+                        let config2 = {
+                            method: 'delete',
+                            url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                            headers: {}
+                        };
+                        axios(config2).then(() => {
+
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+
+
                         store.commit('deltoken')
-                        this.cookies.remove("Token")
                         this.$router.push("/")
+                        this.cookies.remove("Token")
+
                     })
                     .catch((error) => {
                         console.log(error);

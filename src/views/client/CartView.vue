@@ -83,7 +83,7 @@
                 let res = 0
                 for (let i = 0; i < this.cart.length; i++) {
                     // @ts-ignore
-                    res += this.cart[i].price
+                    res += this.cart[i].Prix
                 }
                 return res
             },

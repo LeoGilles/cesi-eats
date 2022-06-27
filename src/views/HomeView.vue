@@ -10,25 +10,39 @@
 
 
         <div class="bestProducts">
-            <div class="background"/>
+            <div class="background" />
             <div :key="article.id" v-for="article in populaMeals">
-                <ProductTile v-bind:content="article"/>
+                <ProductTile v-bind:content="article" />
             </div>
 
         </div>
     </div>
-    <div :key="restaurant.id" class="popular" v-for="restaurant in popularRestaurants">
-        <PopularRestaurant v-bind:content="restaurant"/>
+    <div v-if="!isFetching">
+        <div :key="restaurant.id" class="popular" v-for="restaurant in popularRestaurants">
+            <PopularRestaurant v-bind:content="restaurant" v-bind:id="restaurant.RestaurantId" />
+        </div>
     </div>
+     <div v-else>
+        Loading restaurants...
+     </div>
 </template>
 
 <script lang="ts">
     /* eslint-disable */
-    import {defineComponent} from 'vue';
+    import {
+        defineComponent
+    } from 'vue';
     import ProductTile from '@/components/ProductTile.vue'; // @ is an alias to /src
     import PopularRestaurant from '@/components/PopularRestaurant.vue';
-    import {mapActions, mapState} from "vuex"; // @ is an alias to /src
-
+    import {
+        mapActions,
+        mapState
+    } from "vuex"; // @ is an alias to /src
+    import store from '../store'
+    import axios from 'axios';
+    import {
+        ref
+    } from 'vue'
     export default defineComponent({
         name: 'HomeView',
         components: {
@@ -36,14 +50,15 @@
             PopularRestaurant
 
         },
-        computed:{
-          ...mapState([
-              'count',
-              'popularMeals',
-          ]),
+        computed: {
+            ...mapState([
+                'count',
+                'popularMeals',
+            ]),
         },
         data() {
             return {
+                isFetching: true,
                 populaMeals: {
                     burgerTest: {
                         id: 1,
@@ -78,33 +93,26 @@
                         description: "Boeuf, tomate, pain, salade"
                     }
                 },
-                popularRestaurants: {
-                    restaurant1: {
-                        nom: "restaurant1",
-                        mdp: "",
-                        adresse: "10 rue de Paris, Paris, 75001",
-                        dateOfJoining: "2012-01-03",
-                        img: "",
-                        role: "1",
-                    },
-                    restaurant2: {
-                        nom: "restaurant2",
-                        mdp: "",
-                        adresse: "10 rue de Paris, Paris, 75001",
-                        dateOfJoining: "2012-01-03",
-                        img: "",
-                        role: "1",
-                    },
-                    restaurant3: {
-                        nom: "restaurant3",
-                        mdp: "",
-                        adresse: "10 rue de Paris, Paris, 75001",
-                        dateOfJoining: "2012-01-03",
-                        img: "",
-                        role: "1",
-                    },
-                }
+                popularRestaurants: ref([{}])
+
             }
+        },
+        mounted() {
+            let config = {
+                method: 'get',
+                url: 'http://localhost:3000/api/AllRestaurant',
+                headers: {}
+            };
+
+            axios(config)
+                .then((response) => {
+                    this.popularRestaurants = response.data
+                    this.isFetching = false;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
         },
         methods: {
             ...mapActions([
@@ -119,7 +127,6 @@
     });
 </script>
 <style lang="scss">
-
     .home {
         padding: 20px;
 
@@ -209,6 +216,4 @@
         }
 
     }
-
-
 </style>

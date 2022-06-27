@@ -1,6 +1,9 @@
 <template>
     <h1>Historique des commandes</h1>
-    <CommandeComponent/>
+    <div >
+        <CommandeComponent/>
+    </div>
+    
 </template>
 
 <script>

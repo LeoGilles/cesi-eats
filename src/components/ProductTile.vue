@@ -1,12 +1,14 @@
 <template>
     <div class="article">
-        <img alt="image article" class="imgArticle" src="../assets/buger.webp">
+        <img alt="image article" class="imgArticle" :src="content.Img">
 
-        <h3 class="titleArticle">{{content.nom}}</h3>
-        <p class="ingredient">Ingrédients : {{content.description}}</p>
-        <p class="price">Price : {{content.price}}€</p>
+        <h3 class="titleArticle">{{content.Nom}}</h3>
+        <p class="ingredient">Ingrédients : {{content.Description}}</p>
+        <p class="price">Price : {{content.Prix}}€</p>
         <div class="add">
-            <button class="addToCart" v-on:click="addArticle(content)"><img alt="panier" src="" title="Ajouter au panier"></button>
+            <button class="addToCart" v-on:click="addArticle(content)">Add <font-awesome-icon icon="fa-plus" style="color:lime;" />
+            
+            </button>
 
         </div>
     </div>
