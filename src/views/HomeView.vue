@@ -69,7 +69,6 @@
 
             axios.get('http://localhost:3000/api/AllRestaurant')
                 .then(response => {
-                    console.log(response.data)
                     this.popularRestaurants = response.data
                     //this.restoName(response.data.RestaurantId)
                     this.isFetching= !this.isFetching
@@ -80,7 +79,6 @@
 
             axios.get('http://localhost:3000/api/PopularArticle')
                 .then(response => {
-                    console.log(response.data)
                     this.populaMeals = response.data
                     //this.restoName(response.data.RestaurantId)
                     //this.isFetching= !this.isFetching

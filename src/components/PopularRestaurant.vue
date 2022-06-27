@@ -9,6 +9,8 @@
                          class="card-carousel-cards">
 
                         <div :key="meal.nom" class="card-carousel--card" v-for="meal in meals">
+                            {{content._id}}
+
                             <ProductTile v-bind:content="meal"/>
                         </div>
                     </div>
@@ -23,7 +25,7 @@
 
 <script>
     import ProductTile from "./ProductTile";
-
+    import axios from 'axios'
     export default {
         name: "PopularRestaurant",
         components: {ProductTile,},
@@ -33,36 +35,7 @@
                 currentOffset: 0,
                 windowSize: 3,
                 paginationFactor: 220,
-                meals: {
-                    burgerTest: {
-                        nom: 'Burger',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    },
-                    burgerTest2: {
-                        nom: 'Burger 2',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    },
-                    burgerTest3: {
-                        nom: 'Burger 3',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, saladeBoeuf, tomate, pain, saladeBoeuf, tomate, pain, salade"
-                    },
-                    burgerTest4: {
-                        nom: 'Burger 4',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    }
-                },
+                meals: [],
             }
         },
         computed: {
@@ -84,8 +57,34 @@
                     this.currentOffset += this.paginationFactor;
                 }
             },
+           // async test2(){
+           //      axios.get('http//localhost:3000/api/Article/'+this.props.content._id)
+           //          .then(response => {
+           //              console.log(response.data)
+           //              this.meals = response.data
+           //              //this.restoName(response.data.RestaurantId)
+           //          })
+           //          .catch(error => {
+           //              console.log(error)
+           //          })
+           //  }
 
         },
+
+        mounted(){
+            console.log(this.props)
+            axios.get('http://localhost:3000/api/Article/'+2)
+                .then(response => {
+                    console.log(response.data)
+                    this.meals = response.data
+                    //this.restoName(response.data.RestaurantId)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+           // this.test2()
+        }
 
 
     }
