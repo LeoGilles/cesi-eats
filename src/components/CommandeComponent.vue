@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+   // import axios from 'axios'
     export default {
         name: "CommandeComponent",
         props: ['commande'],
@@ -23,36 +23,25 @@
         },
 
         methods:{
-            async getRestoName(restoId){
-                //console.log(this.props.commande)
-                axios.get('http://localhost:3000/api/Restaurant/'+restoId)
-                    .then(response => {
-                        console.log(response.data.Nom)
-                        this.restoName = response.data.Nom
-                        //this.restoName(response.data.RestaurantId)
-                        return response.data.Nom
-                        //
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-                console.log(this.restoName)
-            }
+            // async getRestoName(restoId){
+            //     //console.log(this.props.commande)
+            //     axios.get('http://localhost:3000/api/Restaurant/'+restoId)
+            //         .then(response => {
+            //             console.log(response.data.Nom)
+            //             this.restoName = response.data.Nom
+            //             //this.restoName(response.data.RestaurantId)
+            //             return response.data.Nom
+            //             //
+            //         })
+            //         .catch(error => {
+            //             console.log(error)
+            //         })
+            //     console.log(this.restoName)
+            // }
         },
 
         mounted() {
-            axios.get('http://localhost:3000/api/Restaurant/'+this.props.commande.RestaurantId)
-                .then(response => {
-                    console.log(response.data.Nom)
-                    this.restoName = response.data.Nom
-                    //this.restoName(response.data.RestaurantId)
-                    return response.data.Nom
-                    //
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-            console.log(this.restoName)
+
         }
     }
 </script>
