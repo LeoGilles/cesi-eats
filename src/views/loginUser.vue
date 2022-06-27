@@ -105,19 +105,21 @@
                 var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
                 this.DateOfJoining = date;
                 this.PhotoFileName = "blank.png";
-                var number = 1;
-                if (this.Roles == 2) {
-                    number = 2;
+                let temp
+                if (this.Roles == "Livreur") {
+                    temp = 2
                 }
-                if (this.Roles == 3) {
-                    number = 3;
+                else if (this.Roles == "Restaurateur") {
+                    temp = 3
+                }else {
+                    temp = 1
                 }
 
                 const data = JSON.stringify({
                     UsersName: this.UsersName,
                     UsersPassword: this.UsersPassword,
                     UsersMail: this.UsersMail,
-                    Roles: number,
+                    Roles: temp,
                     DateOfJoining: this.DateOfJoining,
                     PhotoFileName: this.PhotoFileName
                 })
@@ -131,15 +133,8 @@
                     data: data
                 };
                 axios(config)
-                    .then(response => {
-                        if(response.data["UsersId"] != undefined)
-                        {
-                            this.UsersTemp = response.data["UsersId"]
+                    .then(() => {
                             this.$router.push("/")
-                        }
-                        else{
-                            alert(response.data)
-                        } 
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -178,26 +173,7 @@
                         console.log(error);
                     });
             },
-            CreateRestaurant(){
-                      let data = JSON.stringify({
-
-                    });
-                    let config = {
-                        method: 'post',
-                        url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data
-                    };
-                    axios(config)
-                        .then(() => {
-                            this.refreshResto()
-                            this.$router.push("/")
-                        }).catch((error) => {
-                            console.log(error);
-                        });
-            },
+           
             changeMsg(txt) {
                 this.$emit("message", txt);
             }

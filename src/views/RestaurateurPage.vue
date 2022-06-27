@@ -99,7 +99,6 @@
     } from "vue3-cookies";
     export default {
         name: 'RestaurateurPage',
-
         data: () => ({
             valid: true,
             RestoName: ref(''),
@@ -138,6 +137,9 @@
             };
         },
         mounted() {
+            if (store.state.userRole != 3) {
+                this.$router.push("/")
+            }
             this.refreshResto()
             this.refreshArticle()
         },
@@ -173,7 +175,7 @@
                         });
 
                 } else {
-                 
+
                     const data2 = JSON.stringify({
                         "_id": this.ArticleId,
                         "Nom": this.ArticleName,
@@ -184,7 +186,7 @@
 
                     var config2 = {
                         method: 'put',
-                        url: 'http://localhost:3000/api/Article/'+ store.state.userId,
+                        url: 'http://localhost:3000/api/Article/' + store.state.userId,
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -255,25 +257,81 @@
             },
             SubmitSave() {
                 if (store.state.userId != 0) {
-                    let data = JSON.stringify({
-                        "Nom":  this.RestoName,
-                        "Description": this.RestoDesc
-                    });
                     let config = {
-                        method: 'put',
+                        method: 'get',
                         url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data
+                        headers: {}
                     };
+
                     axios(config)
-                        .then(() => {
-                            this.refreshResto()
-                            this.$router.push("/")
+                        .then((response) => {
+                            console.log(response.data)
+                            if (response.data == null) {
+                                let data2 = JSON.stringify({
+                                    RestaurantId: store.state.userId
+                                });
+
+
+                                let config2 = {
+                                    method: 'post',
+                                    url: 'http://localhost:3000/api/Restaurant/',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    data: data2
+                                };
+                                axios(config2)
+                                    .then(() => {
+                                        let data3 = JSON.stringify({
+                                            "Nom": this.RestoName,
+                                            "Description": this.RestoDesc
+                                        });
+                                        let config3 = {
+                                            method: 'put',
+                                            url: 'http://localhost:3000/api/Restaurant/' + store.state
+                                                .userId,
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            data: data3
+                                        };
+                                        axios(config3)
+                                            .then(() => {
+                                                this.refreshResto()
+                                                this.$router.push("/")
+                                            }).catch((error) => {
+                                                console.log(error);
+                                            });
+                                    }).catch((error) => {
+                                        console.log(error);
+                                    });
+                            } else {
+                                let data4 = JSON.stringify({
+                                    "Nom": this.RestoName,
+                                    "Description": this.RestoDesc
+                                });
+                                let config4 = {
+                                    method: 'put',
+                                    url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    data: data4
+                                };
+                                axios(config4)
+                                    .then(() => {
+                                        this.refreshResto()
+                                        this.$router.push("/")
+                                    }).catch((error) => {
+                                        console.log(error);
+                                    });
+                            }
+
                         }).catch((error) => {
                             console.log(error);
                         });
+
+
                 }
             },
             refreshResto() {
@@ -310,8 +368,6 @@
                 }
 
             }
-
-
         }
 
     }

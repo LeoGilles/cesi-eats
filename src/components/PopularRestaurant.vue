@@ -8,7 +8,7 @@
                     <div :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}"
                          class="card-carousel-cards">
 
-                        <div :key="meal.id" class="card-carousel--card" v-for="meal in meals">
+                        <div :key="meal.nom" class="card-carousel--card" v-for="meal in meals">
                             <ProductTile v-bind:content="meal"/>
                         </div>
                     </div>
@@ -35,7 +35,6 @@
                 paginationFactor: 220,
                 meals: {
                     burgerTest: {
-                        id: 1,
                         nom: 'Burger',
                         img: '../assets/buger.webp',
                         restaurantId: 1,
@@ -43,7 +42,6 @@
                         description: "Boeuf, tomate, pain, salade"
                     },
                     burgerTest2: {
-                        id: 2,
                         nom: 'Burger 2',
                         img: '../assets/buger.webp',
                         restaurantId: 1,
@@ -51,7 +49,6 @@
                         description: "Boeuf, tomate, pain, salade"
                     },
                     burgerTest3: {
-                        id: 3,
                         nom: 'Burger 3',
                         img: '../assets/buger.webp',
                         restaurantId: 1,
@@ -59,7 +56,6 @@
                         description: "Boeuf, tomate, pain, saladeBoeuf, tomate, pain, saladeBoeuf, tomate, pain, salade"
                     },
                     burgerTest4: {
-                        id: 4,
                         nom: 'Burger 4',
                         img: '../assets/buger.webp',
                         restaurantId: 1,

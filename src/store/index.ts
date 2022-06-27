@@ -1,3 +1,4 @@
+import { STATES } from 'mongoose'
 import { createStore } from 'vuex'
 
 const store = createStore({
@@ -6,6 +7,7 @@ const store = createStore({
     popularMeals:[{}],
     token: '',
     userId:0,
+    userRole:0,
     MyResto:{
       Nom:'',
       Description:'',
@@ -39,6 +41,12 @@ const store = createStore({
     delUserId(state)
     {
       state.userId = 0;
+    },
+    suppUserRole(state){
+      state.userRole = 0;
+    },
+    SetUserRole(state,userRole){
+      state.userRole = userRole;
     },
     setMyRestoName(state, MyResto){
       state.MyResto.Nom = MyResto.Nom
