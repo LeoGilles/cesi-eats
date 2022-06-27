@@ -7,7 +7,7 @@
         <p class="price">Price : {{content.Prix}}€</p>
         <div class="add">
             <button class="addToCart" v-on:click="addArticle(content)">Add <font-awesome-icon icon="fa-plus" style="color:lime;" />
-            
+
             </button>
 
         </div>

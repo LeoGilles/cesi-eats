@@ -1,9 +1,9 @@
 <template>
     <div class="productCart">
         <div class="desProductCart">
-            <p class="productCartName">{{product.Nom}}</p>
+            <p class="productCartName">{{product.nom}}</p>
             <p>Description : </p>
-            <p class="descriptionProductCart">{{product.Description}}</p>
+            <p class="descriptionProductCart">{{product.description}}</p>
         </div>
 
         <div class="detailsProductCart">
@@ -13,7 +13,7 @@
                 {{qte}}
                 <span class="plus" v-on:click="addArticle(product)">+</span>
             </p>
-            <p class="price">{{product.Prix}} €</p>
+            <p class="price">{{product.price}} €</p>
 
         </div>
     </div>
