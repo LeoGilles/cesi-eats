@@ -82,22 +82,25 @@
                 //         // handle error
                 //         console.log(error);
                 //     })
-
-                axios.post('http://localhost:4000/api/commande', {
-                    ClientId: 1,
-                    RestaurantId: this.cart.restaurantId,
-                    Prix: this.totalToPaid(),
-                    Description: "z",
-                    Status: 1,
-                    Article: articlesId,
-                    Menu: "zs"
-                })
-                    .then(function (response) {
-                        console.log(response);
+                if (this.cart.length>0){
+                    axios.post('http://localhost:4000/api/commande', {
+                        ClientId: 1,
+                        RestaurantId: this.cart[0].restaurantId,
+                        Prix: this.totalToPaid(),
+                        Description: "z",
+                        Status: 1,
+                        Article: articlesId,
+                        Menu: "zs"
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                        .then(function (response) {
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    this.$router.push('/suivi')
+                }else
+                    console.log('le panier est vide')
 
 
             },
