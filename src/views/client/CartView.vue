@@ -68,10 +68,9 @@
             paid() {
                 let articlesId = []
                 this.cart.forEach(product => {
-                    articlesId.push(product.id)
+                    articlesId.push(product._id)
                 })
                 console.log(articlesId)
-
 
                 // axios.get('http://localhost:4000/api/commande/restaurant/22')
                 //     .then(function (response) {
@@ -85,7 +84,7 @@
                 if (this.cart.length>0){
                     axios.post('http://localhost:4000/api/commande', {
                         ClientId: 1,
-                        RestaurantId: this.cart[0].restaurantId,
+                        RestaurantId: this.cart[0].RestaurantId,
                         Prix: this.totalToPaid(),
                         Description: "z",
                         Status: 1,
@@ -98,7 +97,7 @@
                         .catch(function (error) {
                             console.log(error);
                         });
-                    this.$router.push('/suivi')
+                  //  this.$router.push({name: '/suivi', params: { cmdNum: "bar"}})
                 }else
                     console.log('le panier est vide')
 

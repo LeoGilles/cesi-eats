@@ -1,5 +1,5 @@
 <template>
-    <h2>{{content.nom}}</h2>
+    <h2>{{content.Nom}}</h2>
     <div id="v-carousel" type="x/template">
         <div class="card-carousel-wrapper">
             <div :disabled="atHeadOfList" @click="moveCarousel(-1)" class="card-carousel--nav__left"></div>

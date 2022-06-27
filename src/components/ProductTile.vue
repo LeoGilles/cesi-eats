@@ -30,7 +30,7 @@
             addArticle(product) {
 
                 console.log('cart '+ store.getters.getCart)
-                if (this.cart.length ===0 || this.cart[0].restaurantId === product.restaurantId){
+                if (this.cart.length ===0 || this.cart[0].RestaurantId === product.RestaurantId){
                     store.commit('setCart', product);
                 }else{
                     console.log('t fou')
