@@ -4,7 +4,6 @@
             <h1>Panier</h1>
             <div class="deliveryAdresse">
                 <input type="text" v-model="adressDelivery" :placeholder="adressDelivery"/>
-                <button @click="changeAdresse()">Modifier</button>
 
             </div>
 
@@ -39,7 +38,7 @@
                 <p>{{cart.length>0 ? totalToPaid() : 0}} €</p>
             </div>
             <div class="btn">
-                <button class="paid">Payer</button>
+                <button class="paid" @click="paid()">Payer</button>
             </div>
         </div>
     </div>
@@ -49,6 +48,8 @@
 <script>
     import store from "@/store";
     import ProductCart from "@/components/ProductCart";
+    // eslint-disable-next-line no-unused-vars
+    import axios from 'axios'
 
     export default {
         name: "CartUser",
@@ -64,8 +65,41 @@
             }
         },
         methods: {
-            changeAdresse() {
-                console.log(this.adressDelivery)
+            paid() {
+                let articlesId = []
+                this.cart.forEach(product => {
+                    articlesId.push(product.id)
+                })
+                console.log(articlesId)
+
+
+                // axios.get('http://localhost:4000/api/commande/restaurant/22')
+                //     .then(function (response) {
+                //         // handle success
+                //         console.log(response);
+                //     })
+                //     .catch(function (error) {
+                //         // handle error
+                //         console.log(error);
+                //     })
+
+                axios.post('http://localhost:4000/api/commande', {
+                    ClientId: 1,
+                    RestaurantId: this.cart.restaurantId,
+                    Prix: this.totalToPaid(),
+                    Description: "z",
+                    Status: 1,
+                    Article: articlesId,
+                    Menu: "zs"
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+
             },
 
             qteProduct(id) {
@@ -85,11 +119,9 @@
                     // @ts-ignore
                     res += this.cart[i].price
                 }
-                this.totalPriceCmd=res
+                this.totalPriceCmd = res
                 return res
             },
-
-
 
             totalToPaid() {
                 return this.totalPriceCmd + this.deliveryCost + this.servicePrice
@@ -97,8 +129,8 @@
 
         },
         computed: {
-            refreshProduct(){
-               return new Set(this.cart)
+            refreshProduct() {
+                return new Set(this.cart)
             }
         },
 

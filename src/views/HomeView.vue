@@ -57,7 +57,7 @@
                         id: 2,
                         nom: 'Burger 2',
                         img: '../assets/buger.webp',
-                        restaurantId: 1,
+                        restaurantId: 2,
                         price: 12.2,
                         description: "Boeuf, tomate, pain, salade"
                     },
