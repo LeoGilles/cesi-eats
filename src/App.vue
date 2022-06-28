@@ -35,6 +35,7 @@
   <div>
     <FooterComponent />
   </div>
+  <notifications />
 </template>
 
 <style lang="scss">
