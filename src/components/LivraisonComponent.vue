@@ -11,7 +11,7 @@
             <div class="wrapper--text">
                 <p class="Adresse--restaurant">Adresse du restaurant de la commande</p>
                 <p class="nom--restaurant">Nom du Restaurant</p>
-                <p class="estimation--temps">Estimation du temps</p>
+                <p class="estimation--temps">{{tab_livraison.Description}}</p>
             </div>
         </div>
         <div class="client--part">
@@ -37,9 +37,12 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
     name: "LivraisonComponent",
+    props: {
+        tab_livraison: Object,
+    }
 }
 </script>
 

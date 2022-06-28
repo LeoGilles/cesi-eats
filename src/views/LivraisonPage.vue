@@ -4,17 +4,32 @@
         <h1 class="title">Commandes autours de vous</h1>
     </div>
 
-    <LivraisonComponent/>
-    <LivraisonComponent/>
+    <LivraisonComponent v-for="(liv, i) in livraisons" :key="i" :tab_livraison="liv"/>
   </div>
 </template>
 
-<script lang="ts">
+<script>
+import axios from 'axios';
 import LivraisonComponent from '../components/LivraisonComponent.vue'
 export default {
     name: "LivraisonPage",
     components: {
         LivraisonComponent,
+    },
+    data() {
+        return{
+            livraisons: [],
+        }
+    },
+    mounted(){
+        axios.get('http://localhost:4000/api/commande/status/3')
+        .then((response) => {
+            console.log(response.data);
+            this.livraisons = response.data;
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 }
 </script>
