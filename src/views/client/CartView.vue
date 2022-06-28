@@ -3,14 +3,13 @@
         <div class="articles">
             <h1>Panier</h1>
             <div class="deliveryAdresse">
-                <p>32 rue du gigot</p>
-                <button @click="changeAdresse()">Modifier</button>
+                <input type="text" v-model="adressDelivery" :placeholder="adressDelivery"/>
 
             </div>
 
             <div class="article" v-if="cart.length > 0">
                 <h2>Articles</h2>
-                <div class="details" v-for="product in products" :key="product.id">
+                <div class="details" v-for="product in refreshProduct" :key="product.id">
                     <ProductCart v-bind:product="product" v-bind:qte="qteProduct(product.id)"/>
                 </div>
             </div>
@@ -39,7 +38,7 @@
                 <p>{{cart.length>0 ? totalToPaid() : 0}} €</p>
             </div>
             <div class="btn">
-                <button class="paid">Payer</button>
+                <button class="paid" @click="paid()">Payer</button>
             </div>
         </div>
     </div>
@@ -49,23 +48,60 @@
 <script>
     import store from "@/store";
     import ProductCart from "@/components/ProductCart";
+    // eslint-disable-next-line no-unused-vars
+    import axios from 'axios'
 
     export default {
         name: "CartUser",
         components: {ProductCart},
         data() {
             return {
-                products: store.getters.getProducts,
+                products: [],
                 cart: store.getters.getCart,
                 totalPriceCmd: 0,
                 deliveryCost: 10,
                 servicePrice: 20,
+                adressDelivery: '32 rue du gigot',
             }
         },
-
         methods: {
-            changeAdresse() {
-                console.log('t')
+            paid() {
+                let articlesId = []
+                this.cart.forEach(product => {
+                    articlesId.push(product._id)
+                })
+                console.log(articlesId)
+
+                // axios.get('http://localhost:4000/api/commande/restaurant/22')
+                //     .then(function (response) {
+                //         // handle success
+                //         console.log(response);
+                //     })
+                //     .catch(function (error) {
+                //         // handle error
+                //         console.log(error);
+                //     })
+                if (this.cart.length>0){
+                    axios.post('http://localhost:4000/api/commande', {
+                        ClientId: 1,
+                        RestaurantId: this.cart[0].RestaurantId,
+                        Prix: this.totalToPaid(),
+                        Description: "z",
+                        Status: 1,
+                        Article: articlesId,
+                        Menu: "zs"
+                    })
+                        .then(function (response) {
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                  //  this.$router.push({name: '/suivi', params: { cmdNum: "bar"}})
+                }else
+                    console.log('le panier est vide')
+
+
             },
 
             qteProduct(id) {
@@ -85,18 +121,21 @@
                     // @ts-ignore
                     res += this.cart[i].Prix
                 }
+                this.totalPriceCmd = res
                 return res
             },
-
 
             totalToPaid() {
                 return this.totalPriceCmd + this.deliveryCost + this.servicePrice
             }
 
         },
-        mounted() {
-            console.log(this.cart.length)
-        }
+        computed: {
+            refreshProduct() {
+                return new Set(this.cart)
+            }
+        },
+
     }
 </script>
 
@@ -111,12 +150,8 @@
                 width: 500px;
                 border-bottom: 1px solid #4D90A0;
 
-                p {
-                    padding: 5%;
-                }
-
                 button {
-                    padding: 0 10px;
+                    padding: 10px;
                     margin: 5px;
                     border: none;
                     border-radius: 10px;

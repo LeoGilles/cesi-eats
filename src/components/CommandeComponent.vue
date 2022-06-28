@@ -2,8 +2,8 @@
     <div class="cmd">
         <img alt="imgCommande" class="imgCmd" src="../assets/buger.webp"/>
         <div class="details">
-            <h2>Nom resto</h2>
-            <p>23€ · date · <a href="">Facture</a></p>
+            <h2>{{'restoName'}}</h2>
+            <p>{{commande.Prix}}€ · {{commande.RestaurantId}} · <a href="">Facture</a></p>
         </div>
         <button class="linkToRestaurant">Voir le restaurant</button>
     </div>
@@ -11,8 +11,38 @@
 </template>
 
 <script>
+   // import axios from 'axios'
     export default {
-        name: "CommandeComponent"
+        name: "CommandeComponent",
+        props: ['commande'],
+
+        data (){
+            return{
+                restoName: '',
+            }
+        },
+
+        methods:{
+            // async getRestoName(restoId){
+            //     //console.log(this.props.commande)
+            //     axios.get('http://localhost:3000/api/Restaurant/'+restoId)
+            //         .then(response => {
+            //             console.log(response.data.Nom)
+            //             this.restoName = response.data.Nom
+            //             //this.restoName(response.data.RestaurantId)
+            //             return response.data.Nom
+            //             //
+            //         })
+            //         .catch(error => {
+            //             console.log(error)
+            //         })
+            //     console.log(this.restoName)
+            // }
+        },
+
+        mounted() {
+
+        }
     }
 </script>
 

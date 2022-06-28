@@ -11,6 +11,7 @@
                         <div :key="meal.nom" class="card-carousel--card" v-for="meal in meals">
                             <ProductTile v-bind:content="meal"/>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -23,22 +24,18 @@
 
 <script>
     import ProductTile from "./ProductTile";
-    import axios from 'axios';
-     import {
-        ref
-    } from 'vue'
+    import axios from 'axios'
     export default {
         name: "PopularRestaurant",
         components: {ProductTile,},
-        
-        props: ['content','id'],
+        props: ['content'],
         data() {
             return {
                 currentOffset: 0,
                 windowSize: 3,
                 paginationFactor: 220,
-                meals: ref([{}])
-                }
+                meals: [],
+            }
         },
         computed: {
             atEndOfList() {
@@ -47,19 +44,6 @@
             atHeadOfList() {
                 return this.currentOffset === 0;
             },
-        },
-        mounted(){
-              let config = {
-                        method: 'get',
-                        url: 'http://localhost:3000/api/Article/' + this.content.RestaurantId,
-                    };
-                    axios(config)
-                        .then((response) => {
-
-                            this.meals = response.data;
-                        }).catch((error) => {
-                            console.log(error);
-                        });
         },
         methods: {
             moveCarousel(direction) {
@@ -72,8 +56,34 @@
                     this.currentOffset += this.paginationFactor;
                 }
             },
+           // async test2(){
+           //      axios.get('http//localhost:3000/api/Article/'+this.props.content._id)
+           //          .then(response => {
+           //              console.log(response.data)
+           //              this.meals = response.data
+           //              //this.restoName(response.data.RestaurantId)
+           //          })
+           //          .catch(error => {
+           //              console.log(error)
+           //          })
+           //  }
 
         },
+
+        mounted(){
+            console.log(this.content._id)
+            axios.get('http://localhost:3000/api/Article/'+this.content._id)
+                .then(response => {
+                    console.log(response.data)
+                    this.meals = response.data
+                    //this.restoName(response.data.RestaurantId)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+           // this.test2()
+        }
 
 
     }

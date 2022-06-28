@@ -10,7 +10,7 @@
 
 
         <div class="bestProducts">
-            <div class="background" />
+            <div class="background"></div>
             <div :key="article.id" v-for="article in populaMeals">
                 <ProductTile v-bind:content="article" />
             </div>
@@ -19,11 +19,12 @@
     </div>
     <div v-if="!isFetching">
         <div :key="restaurant.id" class="popular" v-for="restaurant in popularRestaurants">
-            <PopularRestaurant v-bind:content="restaurant" v-bind:id="restaurant.RestaurantId" />
+            <PopularRestaurant v-bind:content="restaurant"/>
         </div>
     </div>
      <div v-else>
         Loading restaurants...
+         {{popularRestaurants[0].Nom}}
      </div>
 </template>
 
@@ -59,69 +60,40 @@
         data() {
             return {
                 isFetching: true,
-                populaMeals: {
-                    burgerTest: {
-                        id: 1,
-                        nom: 'Burger',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    },
-                    burgerTest2: {
-                        id: 2,
-                        nom: 'Burger 2',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    },
-                    burgerTest3: {
-                        id: 3,
-                        nom: 'Burger 3',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, saladeBoeuf, tomate, pain, saladeBoeuf, tomate, pain, salade"
-                    },
-                    burgerTest4: {
-                        id: 4,
-                        nom: 'Burger 4',
-                        img: '../assets/buger.webp',
-                        restaurantId: 1,
-                        price: 12.2,
-                        description: "Boeuf, tomate, pain, salade"
-                    }
-                },
+                populaMeals:[],
                 popularRestaurants: ref([{}])
 
             }
         },
         mounted() {
-            let config = {
-                method: 'get',
-                url: 'http://localhost:3000/api/AllRestaurant',
-                headers: {}
-            };
 
-            axios(config)
-                .then((response) => {
+            axios.get('http://localhost:3000/api/AllRestaurant')
+                .then(response => {
                     this.popularRestaurants = response.data
-                    this.isFetching = false;
+                    //this.restoName(response.data.RestaurantId)
+                    this.isFetching= !this.isFetching
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
+                .catch(error => {
+                    console.log(error)
+                })
 
+            axios.get('http://localhost:3000/api/PopularArticle')
+                .then(response => {
+                    this.populaMeals = response.data
+                    //this.restoName(response.data.RestaurantId)
+                    //this.isFetching= !this.isFetching
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         methods: {
             ...mapActions([
                 'setPopularMeals',
                 'increment'
             ]),
-            test() {
+           async test() {
 
-                this.increment();
             },
         }
     });

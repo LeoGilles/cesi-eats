@@ -7,7 +7,7 @@
         <p class="price">Price : {{content.Prix}}€</p>
         <div class="add">
             <button class="addToCart" v-on:click="addArticle(content)">Add <font-awesome-icon icon="fa-plus" style="color:lime;" />
-            
+
             </button>
 
         </div>
@@ -21,11 +21,20 @@
     export default {
         name: "ProductTile",
         props: ['content'],
+        data(){
+            return{
+                cart: store.getters.getCart
+            }
+        },
         methods: {
             addArticle(product) {
 
                 console.log('cart '+ store.getters.getCart)
-                store.commit('setCart', product);
+                if (this.cart.length ===0 || this.cart[0].RestaurantId === product.RestaurantId){
+                    store.commit('setCart', product);
+                }else{
+                    console.log('t fou')
+                }
                 console.log(store.getters.getCart)
             }
         }
