@@ -31,11 +31,10 @@
         name: "PopularRestaurant",
         components: {ProductTile,},
         
-        props: ['content'],
+        props: ['content','id'],
         data() {
             return {
                 currentOffset: 0,
-                isFetching: true,
                 windowSize: 3,
                 paginationFactor: 220,
                 meals: ref([{}])
