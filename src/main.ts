@@ -6,14 +6,14 @@ import vuetify from './plugins/vuetify'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faDeleteLeft,faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
+import Notifications from '@kyvg/vue3-notification'
 
 library.add(faDeleteLeft)
 library.add(faPlus)
 
 const store = require('./store')
 
-const app = createApp(App).use(store).use(store).use(router).use(vuetify)
+const app = createApp(App).use(store).use(store).use(router).use(vuetify).use(Notifications)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
