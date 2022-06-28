@@ -137,72 +137,81 @@
             };
         },
         mounted() {
-            if (store.state.userRole != 3) {
-                this.$router.push("/")
-            }
+
             this.refreshResto()
             this.refreshArticle()
         },
         methods: {
             SaveArticle() {
-                if (this.ArticleId == '') {
 
-                    const data = JSON.stringify({
-                        "Nom": this.ArticleName,
-                        "Img": this.ArticleImg,
-                        "Prix": this.ArticlePrice,
-                        "Description": this.ArticleDesc
+
+                let config3 = {
+                    method: 'get',
+                    url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                    headers: {}
+                };
+                axios(config3)
+                    .then((response3) => {
+                        if (this.ArticleId == '') {
+                            const data = JSON.stringify({
+                                "Nom": this.ArticleName,
+                                "Img": this.ArticleImg,
+                                "Prix": this.ArticlePrice,
+                                "Description": this.ArticleDesc
+                            });
+
+                            var config1 = {
+                                method: 'post',
+                                url: 'http://localhost:3000/api/Article/' + response3.data["_id"],
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                data: data,
+                            };
+
+                            axios(config1)
+                                .then(() => {
+                                    this.refreshArticle()
+                                    this.dialog = false
+                                    this.ArticleId = ''
+
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+
+                        } else {
+
+                            const data2 = JSON.stringify({
+                                "_id": this.ArticleId,
+                                "Nom": this.ArticleName,
+                                "Img": this.ArticleImg,
+                                "Prix": this.ArticlePrice,
+                                "Description": this.ArticleDesc
+                            });
+
+                            var config2 = {
+                                method: 'put',
+                                url: 'http://localhost:3000/api/Article/' + response3.data["_id"],
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                data: data2,
+                            };
+
+                            axios(config2)
+                                .then(() => {
+                                    this.refreshArticle()
+                                    this.dialog = false
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+                        }
+                    }).catch((error) => {
+                        console.log(error);
                     });
 
-                    var config1 = {
-                        method: 'post',
-                        url: 'http://localhost:3000/api/Article/' + store.state.userId,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data,
-                    };
-
-                    axios(config1)
-                        .then(() => {
-                            this.refreshArticle()
-                            this.dialog = false
-                            this.ArticleId = ''
-
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-
-                } else {
-
-                    const data2 = JSON.stringify({
-                        "_id": this.ArticleId,
-                        "Nom": this.ArticleName,
-                        "Img": this.ArticleImg,
-                        "Prix": this.ArticlePrice,
-                        "Description": this.ArticleDesc
-                    });
-
-                    var config2 = {
-                        method: 'put',
-                        url: 'http://localhost:3000/api/Article/' + store.state.userId,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data2,
-                    };
-
-                    axios(config2)
-                        .then(() => {
-                            this.refreshArticle()
-                            this.dialog = false
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-
-                }
             },
             EditArticle(_id, Nom, Description, Prix) {
 
@@ -230,27 +239,41 @@
                 this.dialog = true
             },
             DeleteArticle() {
-                const data = JSON.stringify({
-                    "_id": this.ArticleId,
-                });
-                console.log(this.ArticleId)
-                var config = {
-                    method: 'delete',
-                    url: 'http://localhost:3000/api/Article/' + store.state.userId,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: data,
+                let config = {
+                    method: 'get',
+                    url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                    headers: {}
                 };
-
                 axios(config)
-                    .then(() => {
-                        this.refreshArticle()
-                        this.dialog = false
-                    })
-                    .catch(function (error) {
+                    .then((response) => {
+                        const data = JSON.stringify({
+                            "_id": this.ArticleId,
+                        });
+
+                        var config2 = {
+                            method: 'delete',
+                            url: 'http://localhost:3000/api/Article/' + response.data["_id"],
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            data: data,
+                        };
+
+                        axios(config2)
+                            .then(() => {
+                                this.refreshArticle()
+                                this.dialog = false
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+
+                    }).catch((error) => {
                         console.log(error);
                     });
+
+
+
             },
             reset1() {
                 this.$refs.form.reset()
@@ -259,7 +282,7 @@
                 if (store.state.userId != 0) {
                     let config = {
                         method: 'get',
-                        url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                        url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
                         headers: {}
                     };
 
@@ -330,15 +353,13 @@
                         }).catch((error) => {
                             console.log(error);
                         });
-
-
                 }
             },
             refreshResto() {
                 if (store.state.userId != 0) {
                     let config = {
                         method: 'get',
-                        url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                        url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
                         headers: {}
                     };
                     axios(config)
@@ -352,19 +373,45 @@
                         });
                 }
             },
+            GetRestaurantObj() {
+                let config = {
+                    method: 'get',
+                    url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                    headers: {}
+                };
+                axios(config)
+                    .then((response) => {
+                        return response.data["_id"]
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+            },
             refreshArticle() {
                 if (store.state.userId != 0) {
+
                     let config = {
                         method: 'get',
-                        url: 'http://localhost:3000/api/Article/' + store.state.userId,
+                        url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                        headers: {}
                     };
                     axios(config)
                         .then((response) => {
-                            store.state.MyResto.Article = response.data;
-                            this.MyArticle = response.data
+                            let config2 = {
+                                method: 'get',
+                                url: 'http://localhost:3000/api/Article/' + response.data["_id"],
+                            };
+                            axios(config2)
+                                .then((response2) => {
+                                    store.state.MyResto.Article = response2.data;
+                                    this.MyArticle = response2.data
+                                }).catch((error) => {
+                                    console.log(error);
+                                });
                         }).catch((error) => {
                             console.log(error);
                         });
+
+
                 }
 
             }
