@@ -32,8 +32,10 @@
                 console.log('cart '+ store.getters.getCart)
                 if (this.cart.length ===0 || this.cart[0].RestaurantId === product.RestaurantId){
                     store.commit('setCart', product);
+                    this.$notify({text:"Article "+product.Nom+" ajouté au panier !", type: 'success'});
                 }else{
                     console.log('t fou')
+                    this.$notify({text: "L'article ne peut pas être ajouté au panier car il ne fait pas parti du même restaurant!", type: 'warn'});
                 }
                 console.log(store.getters.getCart)
             }
