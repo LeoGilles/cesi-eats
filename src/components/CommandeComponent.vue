@@ -3,15 +3,18 @@
         <img alt="imgCommande" class="imgCmd" src="../assets/buger.webp"/>
         <div class="details">
             <h2>{{'restoName'}}</h2>
-            <p>{{commande.Prix}}€ · {{commande.RestaurantId}} · <a href="">Facture</a></p>
+            <p>{{commande.Prix}}€ · {{commande.dateTimeCommander}} · {{commande.Status}} · <a href="">Facture</a></p>
         </div>
         <button class="linkToRestaurant">Voir le restaurant</button>
+        <div class="cmdManage">
+            <button @click="supprOnHistoryClient(commande._id)">Supprimer cette commande de l'historique </button>
+        </div>
     </div>
 
 </template>
 
 <script>
-   // import axios from 'axios'
+    import axios from 'axios'
     export default {
         name: "CommandeComponent",
         props: ['commande'],
@@ -19,6 +22,8 @@
         data (){
             return{
                 restoName: '',
+                commandeVerif: [],
+                status: null,
             }
         },
 
@@ -38,10 +43,40 @@
             //         })
             //     console.log(this.restoName)
             // }
+
+            supprOnHistoryClient(idCmd){
+                if (this.commande.Status===8){
+                    axios.put('http://localhost:4000/api/commande/changeStatusCmd/'+idCmd, {Status: 9})
+                        .then(response => {
+                            // this.popularRestaurants = response.data
+                            console.log(response)
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                    this.$notify({text: 'La commande nom resto à été supprimer de votre historique !', type: 'warn'})
+                }else if (this.commande.Status===6){
+                    axios.put('http://localhost:4000/api/commande/changeStatusCmd/'+idCmd, {Status: 7})
+                        .then(response => {
+                           // this.popularRestaurants = response.data
+                            console.log(response)
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                    this.$notify({text: 'La commande nom resto à été supprimer de votre historique !', type: 'warn'})
+                }else{
+                    this.$notify({text: 'Il est pour le moment, impossible de supprimer cette commande de votre historique !', type: 'warn'})
+                }
+                this.$emit('getHistoriqueCmd')
+            }
         },
 
         mounted() {
-
+            if(this.commande.Status === 7){
+                this.commandeVerif = null
+            }
+            console.log(this.commande)
         }
     }
 </script>
