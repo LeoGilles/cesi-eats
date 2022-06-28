@@ -9,10 +9,9 @@
                          class="card-carousel-cards">
 
                         <div :key="meal.nom" class="card-carousel--card" v-for="meal in meals">
-                            {{content._id}}
-
                             <ProductTile v-bind:content="meal"/>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -72,8 +71,8 @@
         },
 
         mounted(){
-            console.log(this.props)
-            axios.get('http://localhost:3000/api/Article/'+2)
+            console.log(this.content._id)
+            axios.get('http://localhost:3000/api/Article/'+this.content._id)
                 .then(response => {
                     console.log(response.data)
                     this.meals = response.data
