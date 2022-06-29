@@ -1,9 +1,9 @@
 <template>
     <div class="managementClient">
         <v-card class="d-flex justify-start pa-2 mb-6 align-center outlined tile" v-for="User in Users" :key="User">
-            <v-text-field v-model="User.UsersName" label="Nom" class="mr-6 h1"></v-text-field>
-            <v-text-field v-model="User.UsersMail" label="Mail" class="mr-6"></v-text-field>
-            <v-text-field v-model="User.Roles" label="Role" class="mr-6"></v-text-field>
+            <v-text-field v-model="User.UsersName" label="Nom" class="mr-6" style=" width: 150px;"></v-text-field>
+            <v-text-field v-model="User.UsersMail" label="Mail" class="mr-6" style=" width: 250px;"></v-text-field>
+            <v-text-field v-model="User.Roles" label="Role" class="mr-6" style=" width: 50px;"></v-text-field>
             <v-card-text class="mr-6">Date d'inscription : {{User.DateOfJoining}}</v-card-text>
             <v-btn color="success" class="mr-6"
                 @click="SaveClient(User.UsersName,User.UsersMail,User.Roles,User.UsersId)">Save</v-btn>
