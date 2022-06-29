@@ -5,7 +5,7 @@
             </v-text-field>
 
             <v-text-field v-model="Mail" :rules="emailRules" label="E-mail" required></v-text-field>
-                <v-select v-model="Roles" :items="items" 
+                <v-select v-model="Roles" :items="items"
             :rules="[v => !!v || 'Role is required']" label="Roles" required>
         </v-select>
         </v-form>
@@ -72,20 +72,18 @@
                 .catch((error) => {
                     console.log(error);
                 });
-        
+
         },
         methods: {
             editing(edit) {
                 if (edit === 'name') {
                     if (this.editName) {
                         console.log('editing name')
-                        console.log(this.newName)
                     }
                     this.editName = !this.editName;
                 } else if (edit === 'mail') {
                     if (this.editMail) {
                         console.log('editing mail')
-                        console.log(this.newMail)
                     }
                     this.editMail = !this.editMail;
                 } else

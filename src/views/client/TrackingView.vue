@@ -10,7 +10,7 @@
             </v-card-text>
 
             <v-btn style="margin: 10px;" rounded="lg" color="primary"
-                @click="OpenDialog(commande.Status,commande.Prix,commande.Description,commande.Article,commande.dateTimeCommander,commande.dateTimeLivreur,commande.dateTimeRecu,commande._id)">
+                   @click="OpenDialog(commande.Status,commande.Prix,commande.Description,commande.Article,commande.dateTimeCommander,commande.dateTimeLivreur,commande.dateTimeRecu,commande._id)">
                 Suivre la commande
             </v-btn>
             <v-divider></v-divider>
@@ -74,16 +74,16 @@
                         <v-card class="mx-auto" width="500">
                             <div v-if="CmdStatus ==1">
                                 <v-img
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA5gplHjBPdr5W7M9mzFOedn2gY7R1WNIuYw&usqp=CAU"
-                                    height="200px"></v-img>
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA5gplHjBPdr5W7M9mzFOedn2gY7R1WNIuYw&usqp=CAU"
+                                        height="200px"></v-img>
                                 <v-card-title>
                                     En attente de la confirmation du restaurant
                                 </v-card-title>
                             </div>
                             <div v-if="CmdStatus ==2">
                                 <v-img
-                                    src="https://i.pinimg.com/originals/28/4d/41/284d412ca30a4c3c2d0e882f1587d029.gif"
-                                    height="200px" cover></v-img>
+                                        src="https://i.pinimg.com/originals/28/4d/41/284d412ca30a4c3c2d0e882f1587d029.gif"
+                                        height="200px" cover></v-img>
                                 <v-card-title>
                                     Le Restaurant prépare la commande
                                 </v-card-title>
@@ -94,8 +94,8 @@
                             </div>
                             <div v-if="CmdStatus == 3">
                                 <v-img
-                                    src="https://foodservices1.files.wordpress.com/2020/12/food-delivery-lapd.gif?w=640"
-                                    height="200px">
+                                        src="https://foodservices1.files.wordpress.com/2020/12/food-delivery-lapd.gif?w=640"
+                                        height="200px">
                                 </v-img>
                                 <v-card-title>
                                     Le Livreur est en route
@@ -242,7 +242,6 @@
                                     this.MyCmd = response.data
                                     this.MyCmd.forEach(cmd => cmd.dateTimeCommander = moment(cmd
                                         .dateTimeCommander).format('MMMM Do YYYY, h:mm:ss a'))
-                                    console.log(this.MyCmd)
                                 })
                                 .catch((error) => {
                                     console.log(error);
@@ -254,7 +253,6 @@
                 }
             },
             OpenDialog(Status, Prix, Description, Article, dateTimeCommander, dateTimeLivreur, dateTimeRecu, CmdId) {
-                console.log(store.state.userRole)
                 this.CmdStatus = Status
                 this.CmdPrix = Prix
                 this.CmdDescription = Description
