@@ -27,12 +27,8 @@
             }
         },
         mounted() {
-            let config1 = {
-                method: 'get',
-                url: 'http://localhost:3030/api/parrainage/' + store.state.userId,
-            };
 
-            axios(config1)
+            axios.get('http://localhost:1000/gateway/apiParrainage/getParrainage/' + store.state.userId)
                 .then((response) => {
                     this.referMail = response.data["UserMail"]
                 })
@@ -42,12 +38,8 @@
         },
         methods: {
             referFriend() {
-                let config1 = {
-                    method: 'get',
-                    url: 'http://localhost:3030/api/parrainage/' + store.state.userId,
-                };
 
-                axios(config1)
+                axios.get('http://localhost:1000/gateway/apiParrainage/getParrainage/' + store.state.userId)
                     .then((response1) => {
 
                         if (response1.data["UserIdParrain"] == store.state.userId) {
@@ -57,7 +49,7 @@
                             })
                             let config2 = {
                                 method: 'put',
-                                url: 'http://localhost:3030/api/parrainage',
+                                url: 'http://localhost:1000/gateway/apiParrainage/putParrainage',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
@@ -79,14 +71,14 @@
                             })
                             let config3 = {
                                 method: 'post',
-                                url: 'http://localhost:3030/api/parrainage',
+                                url: 'http://localhost:1000/gateway/apiParrainage/postParrainage',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
                                 data: data3
                             }
 
-                            axios(config3)
+                            axios.post(config3)
                                 .then(() => {
 
                                     alert("Le parrainage à bien été enregistré")
