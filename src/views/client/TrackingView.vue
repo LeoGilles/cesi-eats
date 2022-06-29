@@ -2,15 +2,15 @@
     <div class="body">
         <v-card no-gutters v-for="commande in MyCmd" :key="commande">
             <v-card-text v-if="commande.ClientId == userId" class="text-h6">
-               Restaurant : {{commande.RestaurantId}}, Prix de la commande : {{commande.Prix}} €
+                Restaurant : {{commande.RestaurantId}}, Prix de la commande : {{commande.Prix}} €
             </v-card-text>
 
             <v-card-text v-else class="text-h6">
-               Client (Anonyme) : {{commande.ClientId}}, Prix de la commande : {{commande.Prix}} €
+                Client (Anonyme) : {{commande.ClientId}}, Prix de la commande : {{commande.Prix}} €
             </v-card-text>
 
             <v-btn style="margin: 10px;" rounded="lg" color="primary"
-                @click="OpenDialog(commande.Status,commande.Prix,commande.Description,commande.Article,commande.dateTimeCommander,commande.dateTimeLivreur,commande.dateTimeRecu)">
+                @click="OpenDialog(commande.Status,commande.Prix,commande.Description,commande.Article,commande.dateTimeCommander,commande.dateTimeLivreur,commande.dateTimeRecu,commande._id)">
                 Suivre la commande
             </v-btn>
             <v-divider></v-divider>
@@ -30,7 +30,7 @@
                                         <strong class="mr-4">{{CmddateTimeCommander}}</strong>
                                         <div>
                                             <div class="text-caption">
-                                                En attente 
+                                                En attente
                                             </div>
                                         </div>
                                     </div>
@@ -40,7 +40,7 @@
                                     <div class="d-flex">
                                         <strong class="mr-4"></strong>
                                         <div>
-                                            <strong>Le Restaurant prépare votre commande</strong>
+                                            <strong>Le Restaurant prépare la commande</strong>
                                             <div class="text-caption">
                                                 {{CmdDescription}}
                                             </div>
@@ -52,7 +52,7 @@
                                     <div class="d-flex">
                                         <strong class="mr-4">{{CmddateTimeLivreur}}</strong>
                                         <div>
-                                            <strong>le Livreur prend en charge votre commande</strong>
+                                            <strong>le Livreur prend en charge la commande</strong>
                                         </div>
                                     </div>
                                 </v-timeline-item>
@@ -61,7 +61,7 @@
                                     <div class="d-flex">
                                         <strong class="mr-4">{{CmddateTimeRecu}}</strong>
                                         <div>
-                                            <strong>Le livreur vous attend à votre porte</strong>
+                                            <strong>Le livreur vous attend devant la porte</strong>
                                             <div class="text-caption">
                                                 Bonne appetit !
                                             </div>
@@ -85,7 +85,7 @@
                                     src="https://i.pinimg.com/originals/28/4d/41/284d412ca30a4c3c2d0e882f1587d029.gif"
                                     height="200px" cover></v-img>
                                 <v-card-title>
-                                    Le Restaurant prépare votre commande
+                                    Le Restaurant prépare la commande
                                 </v-card-title>
 
                                 <v-card-subtitle>
@@ -121,7 +121,7 @@
                                         Prix : {{CmdPrix}} €
                                     </v-card-text>
                                     <v-card-text>
-                                        Articles : {{CmdArticle}} 
+                                        Articles : {{CmdArticle}}
                                     </v-card-text>
                                 </div>
                             </v-expand-transition>
@@ -129,7 +129,11 @@
                     </div>
                 </v-card-text>
                 <v-card-actions>
+                    <v-btn color="dark-green" v-if="CmdStatus == 1" @click="AcceptCmd(this.CmdId)">Accepter la Commande
+                    </v-btn>
                     <v-spacer></v-spacer>
+                    <v-btn color="green" v-if="CmdStatus == 2" @click="ValidateCmd(this.CmdId)">Envoyer la Commande
+                    </v-btn>
                     <v-btn color="blue-darken-1" text @click="CloseDialog">
                         Close
                     </v-btn>
@@ -196,27 +200,28 @@
                         .then((response) => {
                             this.MyCmd = response.data
                             this.MyCmd.forEach(cmd => {
-                                cmd.dateTimeCommander = moment(cmd.dateTimeCommander).format('MMMM Do YYYY, h:mm:ss a')
-                                    let config3 = {
-                                        method: 'get',
-                                        url: 'http://localhost:3000/api/Restaurant/' + cmd.RestaurantId,
-                                        headers: {}
-                                    };
-                                    axios(config3)
-                                        .then((response3) => {
-                                            cmd.RestaurantId = response3.data['Nom']
-                                            console.log(cmd)
-                                        })
-                                        .catch((error) => {
-                                            console.log(error);
-                                        });
+                                cmd.dateTimeCommander = moment(cmd.dateTimeCommander).format(
+                                    'MMMM Do YYYY, h:mm:ss a')
+                                let config3 = {
+                                    method: 'get',
+                                    url: 'http://localhost:3000/api/Restaurant/' + cmd.RestaurantId,
+                                    headers: {}
+                                };
+                                axios(config3)
+                                    .then((response3) => {
+                                        cmd.RestaurantId = response3.data['Nom']
+                                        console.log(cmd)
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
                             })
-                            
+
                         })
                         .catch((error) => {
                             console.log(error);
-                        });        
-        
+                        });
+
                 } else if (this.role == 3) {
                     let config3 = {
                         method: 'get',
@@ -227,7 +232,8 @@
                         .then((response3) => {
                             let config = {
                                 method: 'get',
-                                url: 'http://localhost:4000/api/commande/restaurant/now/' + response3.data["_id"],
+                                url: 'http://localhost:4000/api/commande/restaurant/now/' + response3.data[
+                                    "_id"],
                                 headers: {}
                             };
 
@@ -247,7 +253,7 @@
                         });
                 }
             },
-            OpenDialog(Status, Prix, Description, Article, dateTimeCommander, dateTimeLivreur, dateTimeRecu) {
+            OpenDialog(Status, Prix, Description, Article, dateTimeCommander, dateTimeLivreur, dateTimeRecu, CmdId) {
                 console.log(store.state.userRole)
                 this.CmdStatus = Status
                 this.CmdPrix = Prix
@@ -256,7 +262,7 @@
                 this.CmddateTimeCommander = dateTimeCommander
                 this.CmddateTimeLivreur = dateTimeLivreur
                 this.CmddateTimeRecu = dateTimeRecu
-
+                this.CmdId = CmdId
                 this.dialog = true
             },
             CloseDialog() {
@@ -267,8 +273,53 @@
                 this.CmddateTimeCommander = ""
                 this.CmddateTimeLivreur = ""
                 this.CmddateTimeRecu = ""
-
+                this.CmdId = ""
                 this.dialog = false
+            },
+            ValidateCmd(Id) {
+                let data = JSON.stringify({
+                    "Status": 3
+                });
+                let config = {
+                    method: 'put',
+                    url: 'http://localhost:4000/api/commande/changeStatusCmd/' + Id,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    data: data
+                };
+
+                axios(config)
+                    .then(() => {
+                        this.CloseDialog()
+                        this.refreshCommand()
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
+            AcceptCmd(Id) {
+
+                let data = JSON.stringify({
+                    "Status": 2
+                });
+                let config = {
+                    method: 'put',
+                    url: 'http://localhost:4000/api/commande/changeStatusCmd/' + Id,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    data: data
+                };
+
+                axios(config)
+                    .then(() => {
+                        this.CloseDialog()
+                        this.refreshCommand()
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             }
         }
     }
