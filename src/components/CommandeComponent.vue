@@ -49,7 +49,6 @@
                     axios.put('http://localhost:1000/gateway/api/changeStatusCommande/'+idCmd, {Status: 9})
                         .then(response => {
                             // this.popularRestaurants = response.data
-                            console.log(response)
                             this.$emit('weAreSure')
                         })
                         .catch(error => {
@@ -60,7 +59,6 @@
                     axios.put('http://localhost:1000/gateway/api/changeStatusCommande/'+idCmd, {Status: 7})
                         .then(response => {
                             // this.popularRestaurants = response.data
-                            console.log(response)
                             this.$emit('weAreSure')
                         })
                         .catch(error => {
@@ -78,7 +76,6 @@
             if(this.commande.Status === 7){
                 this.commandeVerif = null
             }
-            console.log(this.commande)
         }
     }
 </script>

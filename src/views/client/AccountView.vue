@@ -53,7 +53,6 @@
         },
         computed() {
             this.role = store.state.userRole
-            console.log(this.role)
         },
         mounted() {
             let config = {
@@ -90,7 +89,7 @@
                 }
 
             },
-            
+
         }
     }
 </script>
