@@ -56,7 +56,7 @@
 
                 let config = {
                     method: 'delete',
-                    url: 'http://localhost:3040/api/notifications',
+                    url: 'http://localhost:1000/gateway/apiNotification/getNotification',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -73,13 +73,7 @@
             },
             refreshData() {
 
-                let config = {
-                    method: 'get',
-                    url: 'http://localhost:3040/api/notifications/' + store.state.userId,
-                    headers: {}
-                };
-
-                axios(config)
+                axios.get('http://localhost:1000/api/notifications/' + store.state.userId)
                     .then((response) => {
                         this.NotificationsList = response.data
                         this.NotifCount = this.NotificationsList.length
