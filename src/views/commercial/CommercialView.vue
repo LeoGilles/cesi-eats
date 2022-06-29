@@ -6,8 +6,8 @@
             <button v-on:click="openMenuCommercial('gestionClient')">Gestion clients</button>
             <button v-on:click="openMenuCommercial('dashaboard')">Dashaboard</button>
         </div>
-        <management-client :style="!clientButton ? buttonNav : null"/>
-        <dashboard-command :style="!dashboardButton ? buttonNav : null"/>
+        <management-client :style="!clientButton ? buttonNav : null" />
+        <dashboard-command :style="!dashboardButton ? buttonNav : null" />
     </div>
 
 
@@ -16,10 +16,13 @@
 <script>
     import ManagementClient from "../../components/management/ManagementClient";
     import DashboardCommand from "../../components/management/DashboardCommand";
-
     export default {
+
         name: "CommercialView",
-        components: {DashboardCommand, ManagementClient},
+        components: {
+            DashboardCommand,
+            ManagementClient
+        },
         data() {
             return {
                 clientButton: true,
@@ -29,12 +32,12 @@
                 }
             }
         },
-        methods:{
-            openMenuCommercial(btn){
-                if (btn==='gestionClient'){
+         methods: {
+            openMenuCommercial(btn) {
+                if (btn === 'gestionClient') {
                     this.clientButton = true;
                     this.dashboardButton = false;
-                }else if (btn==='dashaboard'){
+                } else if (btn === 'dashaboard') {
                     this.clientButton = false;
                     this.dashboardButton = true;
                 }
@@ -46,19 +49,20 @@
 <style scoped lang="scss">
     .commercialView {
         margin-top: 20px;
+
         .commercialViewBtn {
             button {
                 border-radius: 20px;
                 background: linear-gradient(145deg, #f9f9f9, #f0f0f0);
                 box-shadow: 20px 20px 60px #bebebe,
-                -20px -20px 60px #ffffff;
+                    -20px -20px 60px #ffffff;
             }
 
             button:active {
                 border-radius: 20px;
                 background: #e0e0e0;
                 box-shadow: inset 20px 20px 60px #bebebe,
-                inset -20px -20px 60px #ffffff;
+                    inset -20px -20px 60px #ffffff;
             }
         }
     }
@@ -83,9 +87,7 @@
                     padding: .5cm;
                 }
 
-                button:active {
-
-                }
+                button:active {}
             }
         }
     }

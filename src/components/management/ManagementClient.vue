@@ -1,91 +1,132 @@
 <template>
     <div class="managementClient">
-        <div class="managementClientInfo">
-            <p class="managementClientUsername">username</p>
-            <p class="managementClientMail">mail@example.com</p>
-        </div>
-        <p class="role">role : 1</p>
-        <p class="managementClientDateJoin">17/4/1974</p>
-        <div class="managementClientActions">
-            <button class="managementClientSuspend" @click="suspendClient()">Suspendre</button>
-            <button class="managementClientDelete" @click="deleteClient()">Supprimer</button>
-        </div>
+        <v-card class="d-flex justify-start pa-2 mb-6 align-center outlined tile" v-for="User in Users" :key="User">
+            <v-text-field v-model="User.UsersName" label="Nom" class="mr-6 h1"></v-text-field>
+            <v-text-field v-model="User.UsersMail" label="Mail" class="mr-6"></v-text-field>
+            <v-text-field v-model="User.Roles" label="Role" class="mr-6"></v-text-field>
+            <v-card-text class="mr-6">Date d'inscription : {{User.DateOfJoining}}</v-card-text>
+            <v-btn color="success" class="mr-6"
+                @click="SaveClient(User.UsersName,User.UsersMail,User.Roles,User.UsersId)">Save</v-btn>
+            <v-btn class="mr-6" @click="suspendClient()">Suspendre</v-btn>
+            <v-btn color="error" class="mr-10" @click="deleteClient(User.UsersId)">Supprimer</v-btn>
+        </v-card>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         name: "ManagementClient",
-        data(){
-            return{
+        data() {
+            return {
+                Users: [{}],
             }
         },
         methods: {
-            deleteClient(){
-                this.$notify({text:"Vous avez supprimer le client gngn !", type: 'warn'});
-                console.log('delete client account')
+            deleteClient(UsersId) {
+                let config = {
+                    method: 'delete',
+                    url: 'http://localhost:10432/api/Users/' + UsersId,
+                    headers: {}
+                };
+
+                axios(config)
+                    .then(() => {
+                        this.$notify({
+                            text: "Vous avez supprimer le client !",
+                            type: 'success'
+                        });
+                        this.refresh()
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             },
             suspendClient() {
-                this.$notify({text:"Vous avez suspendu le client gngn !", type: 'warn'});
+                this.$notify({
+                    text: "Vous avez suspendu le client !",
+                    type: 'warn'
+                });
                 console.log('suspend client account')
+            },
+            SaveClient(UsersName, UsersMail, Roles, UsersId) {
+                let data = JSON.stringify({
+                    "UsersId": UsersId,
+                    "UsersName": UsersName,
+                    "UsersMail": UsersMail,
+                    "Roles": Roles,
+                });
+                let config = {
+                    method: 'put',
+                    url: 'http://localhost:10432/api/Users',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: data
+                };
+
+                axios(config)
+                    .then(() => {
+                        this.$notify({
+                            text: "Vous avez edité le client !",
+                            type: 'success'
+                        });
+                        this.refresh()
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
+            refresh() {
+                let config = {
+                    method: 'get',
+                    url: 'http://localhost:10432/api/Users',
+                    headers: {},
+                    withCredentials: true
+                };
+
+                axios(config)
+                    .then((response) => {
+                        this.Users = response.data
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             }
-        }
+        },
+        mounted() {
+            this.refresh()
+        },
+
     }
 </script>
 
 <style scoped lang="scss">
-    .managementClient{
+    .managementClient {
         border-top: 1px solid #4D90A0;
         padding: 20px 5%;
+        display: flex;
+        flex-direction: column;
 
-
-        .managementClientActions{
-            display: flex;
-
-            button{
-                border-radius: 20px;
-                background: linear-gradient(145deg, #f9f9f9, #f0f0f0);
-                box-shadow: 20px 20px 60px #bebebe,
-                -20px -20px 60px #ffffff;
-            }
-            button:active{
-                border-radius: 20px;
-                background: #e0e0e0;
-                box-shadow: inset 20px 20px 60px #bebebe,
-                inset -20px -20px 60px #ffffff;
-            }
-        }
     }
 
     @media (max-width: 899px) {
-        .managementClientActions{
+        .managementClientActions {
             display: flex;
             flex-direction: column;
             align-items: center;
-            button{
-                margin: 30px 10px 10px 10px;
-                padding: 20px;
-            }
+
+
         }
 
     }
 
     @media (min-width: 900px) {
-        .managementClient{
+        .managementClient {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            .managementClientActions{
 
-                button{
-                    min-width: 200px;
-                    margin: 0 40px;
-                    padding: .5cm;
-                }
-                button:active{
-
-                }
-            }
         }
     }
 </style>
