@@ -22,9 +22,11 @@
         },
         methods: {
             deleteClient(){
+                this.$notify({text:"Vous avez supprimer le client gngn !", type: 'warn'});
                 console.log('delete client account')
             },
             suspendClient() {
+                this.$notify({text:"Vous avez suspendu le client gngn !", type: 'warn'});
                 console.log('suspend client account')
             }
         }

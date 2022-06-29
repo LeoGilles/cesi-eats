@@ -1,13 +1,14 @@
 <template>
     <div class="tileManagement">
-        <p class="">3</p>
-        <h3>Nombre de chez pas quoi</h3>
+        <p class="">{{stat}}</p>
+        <h3>{{title}}</h3>
     </div>
 </template>
 
 <script>
     export default {
-        name: "TileManagement"
+        name: "TileManagement",
+        props: ['stat', 'title']
     }
 </script>
 
