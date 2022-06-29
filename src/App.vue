@@ -167,6 +167,19 @@
           axios(config)
             .then((response) => {
               store.commit("addUserId", response.data["UsersId"])
+               let config2 = {
+                method: 'get',
+                url: 'http://localhost:10432/api/Users/' + response.data["UsersId"],
+                headers: {}
+            };
+
+            axios(config2)
+                .then((response2) => {                   
+                    store.commit('SetUserRole', response2.data[0]["Roles"])
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             })
             .catch((error) => {
               console.log(error);

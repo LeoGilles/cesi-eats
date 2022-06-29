@@ -2,8 +2,8 @@
     <div class="cmd">
         <img alt="imgCommande" class="imgCmd" src="../assets/buger.webp"/>
         <div class="details">
-            <h2>{{'restoName'}}</h2>
-            <p>{{commande.Prix}}€ · {{commande.RestaurantId}} · <a href="">Facture</a></p>
+            <h2>{{commande.RestaurantId}}</h2>
+            <p>{{commande.Prix}}€ · {{commande.Description}} · <a href="">Facture</a></p>
         </div>
         <button class="linkToRestaurant">Voir le restaurant</button>
     </div>
