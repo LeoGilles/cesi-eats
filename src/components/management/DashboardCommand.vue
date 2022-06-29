@@ -30,7 +30,7 @@
         },
         methods:{
             getTotalCmd(){
-                axios.get('http://localhost:4000/api/commercial/commandes/')
+                axios.get('http://localhost:1000/gateway/api/commercial/commande/')
                     .then(response => {
                         this.totalCmd= response.data
                     })
@@ -39,7 +39,7 @@
                     })
             },
             getTotalCmdLivre(){
-                axios.get('http://localhost:4000/api/commercial/commandeLivre/')
+                axios.get('http://localhost:1000/gateway/api/commercial/commandeLivre/')
                     .then(response => {
                         this.totalCmdLivre= response.data
                     })
@@ -48,7 +48,7 @@
                     })
             },
             getTotalCmdNonLivre(){
-                axios.get('http://localhost:4000/api/commercial/commandeNonLivre/')
+                axios.get('http://localhost:1000/gateway/api/commercial/commandeNonLivre/')
                     .then(response => {
                         this.totalCmdNonLivre= response.data
                     })
@@ -57,7 +57,7 @@
                     })
             },
             getTotalCmdEnPrep(){
-                axios.get('http://localhost:4000/api/commercial/commandePreparation/')
+                axios.get('http://localhost:1000/gateway/api/commercial/commandePreparation/')
                     .then(response => {
                         this.totalCmdEnPrep= response.data
                     })
@@ -66,7 +66,7 @@
                     })
             },
             getTotalCmdEnLivraison(){
-                axios.get('http://localhost:4000/api/commercial/commandeLivraison/')
+                axios.get('http://localhost:1000/gateway/api/commercial/commandeLivraison/')
                     .then(response => {
                         this.totalCmdEnLivraison= response.data
                     })
@@ -76,7 +76,7 @@
             },
 
             getMeanCart(){
-                axios.get('http://localhost:4000/api/commercial/panierMoyen')
+                axios.get('http://localhost:1000/gateway/api/commercial/panierMoyen/')
                     .then(response => {
                         const prix = response.data
                         let sum =0

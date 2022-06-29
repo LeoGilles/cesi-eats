@@ -23,7 +23,7 @@
 
         methods:{
             getHistoriqueCmd(){
-                axios.get('http://localhost:4000/api/commande/'+123)
+                axios.get('http://localhost:1000/gateway/api/commande/'+123)
                     .then(response => {
                         console.log(response.data)
                         let verifCmd= []

@@ -82,7 +82,7 @@
                 //         console.log(error);
                 //     })
                 if (this.cart.length>0){
-                    axios.post('http://localhost:4000/api/commande', {
+                    axios.post('http://localhost:1000/gateway/api/postCommande/', {
                         ClientId: 1,
                         RestaurantId: this.cart[0].RestaurantId,
                         Prix: this.totalToPaid(),

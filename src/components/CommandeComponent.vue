@@ -46,7 +46,7 @@
 
             supprOnHistoryClient(idCmd){
                 if (this.commande.Status===8){
-                    axios.put('http://localhost:4000/api/commande/changeStatusCmd/'+idCmd, {Status: 9})
+                    axios.put('http://localhost:1000/gateway/api/changeStatusCommande/'+idCmd, {Status: 9})
                         .then(response => {
                             // this.popularRestaurants = response.data
                             console.log(response)
@@ -56,7 +56,7 @@
                         })
                     this.$notify({text: 'La commande nom resto à été supprimer de votre historique !', type: 'warn'})
                 }else if (this.commande.Status===6){
-                    axios.put('http://localhost:4000/api/commande/changeStatusCmd/'+idCmd, {Status: 7})
+                    axios.put('http://localhost:1000/gateway/api/changeStatusCommande/'+idCmd, {Status: 7})
                         .then(response => {
                            // this.popularRestaurants = response.data
                             console.log(response)
