@@ -91,7 +91,7 @@
                             <v-text-field v-model="MenuName" :counter="20" :rules="nameRules" label="Nom du Menu"
                                 required>
                             </v-text-field>
-                            <v-text-field v-model="MenuDesc" label="Description du Menu">
+                            <v-text-field v-model="MenuDesc" label="Description/Contenu du Menu">
                             </v-text-field>
                             <v-text-field v-model="MenuPrice" :rules="PriceRules" label="Prix du Menu €" required>
                             </v-text-field>

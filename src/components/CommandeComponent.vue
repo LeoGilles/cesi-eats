@@ -58,7 +58,7 @@
                 }else if (this.commande.Status===6){
                     axios.put('http://localhost:1000/gateway/api/changeStatusCommande/'+idCmd, {Status: 7})
                         .then(response => {
-                           // this.popularRestaurants = response.data
+                            // this.popularRestaurants = response.data
                             console.log(response)
                         })
                         .catch(error => {
