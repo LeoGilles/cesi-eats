@@ -30,7 +30,7 @@
                                         <strong class="mr-4">{{CmddateTimeCommander}}</strong>
                                         <div>
                                             <div class="text-caption">
-                                                En attente 
+                                                En attente
                                             </div>
                                         </div>
                                     </div>
@@ -121,7 +121,7 @@
                                         Prix : {{CmdPrix}} €
                                     </v-card-text>
                                     <v-card-text>
-                                        Articles : {{CmdArticle}} 
+                                        Articles : {{CmdArticle}}
                                     </v-card-text>
                                 </div>
                             </v-expand-transition>
@@ -205,18 +205,17 @@
                                     axios(config3)
                                         .then((response3) => {
                                             cmd.RestaurantId = response3.data['Nom']
-                                            console.log(cmd)
                                         })
                                         .catch((error) => {
                                             console.log(error);
                                         });
                             })
-                            
+
                         })
                         .catch((error) => {
                             console.log(error);
-                        });        
-        
+                        });
+
                 } else if (this.role == 3) {
                     let config3 = {
                         method: 'get',
@@ -236,7 +235,6 @@
                                     this.MyCmd = response.data
                                     this.MyCmd.forEach(cmd => cmd.dateTimeCommander = moment(cmd
                                         .dateTimeCommander).format('MMMM Do YYYY, h:mm:ss a'))
-                                    console.log(this.MyCmd)
                                 })
                                 .catch((error) => {
                                     console.log(error);
@@ -248,7 +246,6 @@
                 }
             },
             OpenDialog(Status, Prix, Description, Article, dateTimeCommander, dateTimeLivreur, dateTimeRecu) {
-                console.log(store.state.userRole)
                 this.CmdStatus = Status
                 this.CmdPrix = Prix
                 this.CmdDescription = Description

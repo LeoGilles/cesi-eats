@@ -71,7 +71,6 @@
                 this.cart.forEach(product => {
                     articlesId.push(product._id)
                 })
-                console.log(articlesId)
 
                 // axios.get('http://localhost:4000/api/commande/restaurant/22')
                 //     .then(function (response) {
@@ -96,6 +95,7 @@
                             console.log(response);
                         })
                         .catch(function (error) {
+                            this.$notify({text: 'Nous sommes désolé, une erreur s\'est produite', type: 'error'})
                             console.log(error);
                         });
                   //  this.$router.push({name: '/suivi', params: { cmdNum: "bar"}})
@@ -144,7 +144,6 @@
             axios.get('http://localhost:1000/gateway/api/commande/client/now/'+123)
                 .then(response => {
                     // this.popularRestaurants = response.data
-                    console.log(response)
                     const cmdParClient=response.data
                     for(let i=0; i<cmdParClient.length;i++){
                         if (cmdParClient[i].Status>0 && cmdParClient[i].Status<6){
@@ -154,6 +153,7 @@
                 })
                 .catch(error => {
                     console.log(error)
+                    this.$notify({text: 'Nous sommes désolé, une erreur s\'est produite', type: 'error'})
                 })
         }
     }
