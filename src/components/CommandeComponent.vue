@@ -50,6 +50,7 @@
                         .then(response => {
                             // this.popularRestaurants = response.data
                             console.log(response)
+                            this.$emit('weAreSure')
                         })
                         .catch(error => {
                             console.log(error)
@@ -60,6 +61,7 @@
                         .then(response => {
                             // this.popularRestaurants = response.data
                             console.log(response)
+                            this.$emit('weAreSure')
                         })
                         .catch(error => {
                             console.log(error)
@@ -68,7 +70,7 @@
                 }else{
                     this.$notify({text: 'Il est pour le moment, impossible de supprimer cette commande de votre historique !', type: 'warn'})
                 }
-                this.$emit('getHistoriqueCmd')
+
             }
         },
 

@@ -56,25 +56,25 @@
                     this.currentOffset += this.paginationFactor;
                 }
             },
-           // async test2(){
-           //      axios.get('http//localhost:3000/api/Article/'+this.props.content._id)
-           //          .then(response => {
-           //              console.log(response.data)
-           //              this.meals = response.data
-           //              //this.restoName(response.data.RestaurantId)
-           //          })
-           //          .catch(error => {
-           //              console.log(error)
-           //          })
-           //  }
+            // async test2(){
+            //      axios.get('http//localhost:3000/api/Article/'+this.props.content._id)
+            //          .then(response => {
+            //              console.log(response.data)
+            //              this.meals = response.data
+            //              //this.restoName(response.data.RestaurantId)
+            //          })
+            //          .catch(error => {
+            //              console.log(error)
+            //          })
+            //  }
 
         },
 
         mounted(){
-            
-            axios.get('http://localhost:3000/api/Article/'+this.content._id)
+            console.log(this.content._id)
+            axios.get('http://localhost:1000/gateway/apiArticle/'+this.content._id)
                 .then(response => {
-                    
+                    console.log(response.data)
                     this.meals = response.data
                     //this.restoName(response.data.RestaurantId)
                 })
@@ -82,7 +82,7 @@
                     console.log(error)
                 })
 
-           // this.test2()
+            // this.test2()
         }
 
 

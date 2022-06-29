@@ -67,7 +67,7 @@
         },
         mounted() {
 
-            axios.get('http://localhost:3000/api/AllRestaurant')
+            axios.get('http://localhost:1000/gateway/allRestaurant/')
                 .then(response => {
                     this.popularRestaurants = response.data
                     //this.restoName(response.data.RestaurantId)
@@ -77,7 +77,7 @@
                     console.log(error)
                 })
 
-            axios.get('http://localhost:3000/api/PopularArticle')
+            axios.get('http://localhost:1000/gateway/popularArticle/')
                 .then(response => {
                     this.populaMeals = response.data
                     //this.restoName(response.data.RestaurantId)

@@ -2,7 +2,7 @@
     <h1 class="commandHistoryTitle">Historique des commandes</h1>
 
     <div v-for="cmd in historyCmd" :key="cmd._id">
-        <CommandeComponent v-bind:commande="cmd" @getHistoriqueCmd="getHistoriqueCmd"/>
+        <CommandeComponent v-bind:commande="cmd" @weAreSure="getHistoriqueCmd()"/>
     </div>
 
 </template>
@@ -23,7 +23,7 @@
 
         methods:{
             getHistoriqueCmd(){
-                axios.get('http://localhost:1000/gateway/api/commande/'+123)
+                axios.get('http://localhost:1000/gateway/api/commande/now/'+123)
                     .then(response => {
                         console.log(response.data)
                         let verifCmd= []
