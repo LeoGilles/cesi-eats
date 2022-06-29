@@ -62,6 +62,7 @@
                 deliveryCost: 10,
                 servicePrice: 20,
                 adressDelivery: '32 rue du gigot',
+                isOrderInProgress: false,
             }
         },
         methods: {
@@ -81,7 +82,7 @@
                 //         // handle error
                 //         console.log(error);
                 //     })
-                if (this.cart.length>0){
+                if (this.cart.length>0 && this.isOrderInProgress===false){
                     axios.post('http://localhost:1000/gateway/api/postCommande/', {
                         ClientId: 1,
                         RestaurantId: this.cart[0].RestaurantId,
@@ -98,8 +99,12 @@
                             console.log(error);
                         });
                   //  this.$router.push({name: '/suivi', params: { cmdNum: "bar"}})
-                }else
-                    console.log('le panier est vide')
+                }else if(this.cart.length === 0)
+                    this.$notify({text: 'Le pannier est vide', type: 'warn'})
+                else if(this.isOrderInProgress === true)
+                    this.$notify({text: 'Une commande est deja en cours, attendez qu\'elle soit livrée pour pouvoir commander à nouveau.', type: 'warn'})
+                else
+                    this.$notify({text: 'Nous sommes désolé, une erreur s\'est produite', type: 'error'})
 
 
             },
@@ -135,7 +140,22 @@
                 return new Set(this.cart)
             }
         },
-
+        mounted(){
+            axios.get('http://localhost:1000/gateway/api/commande/client/now/'+123)
+                .then(response => {
+                    // this.popularRestaurants = response.data
+                    console.log(response)
+                    const cmdParClient=response.data
+                    for(let i=0; i<cmdParClient.length;i++){
+                        if (cmdParClient[i].Status>0 && cmdParClient[i].Status<6){
+                            this.isOrderInProgress = true
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
     }
 </script>
 
