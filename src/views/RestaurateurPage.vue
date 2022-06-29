@@ -222,7 +222,7 @@
             SaveArticle() {
                 let config3 = {
                     method: 'get',
-                    url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                    url: 'http://localhost:1000/gateway/restaurantObj/' + store.state.userId,
                     headers: {}
                 };
                 axios(config3)
@@ -237,7 +237,7 @@
 
                             var config1 = {
                                 method: 'post',
-                                url: 'http://localhost:3000/api/Article/' + response3.data["_id"],
+                                url: 'http://localhost:1000/gateway/postArticle/' + response3.data["_id"],
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
@@ -267,7 +267,7 @@
 
                             var config2 = {
                                 method: 'put',
-                                url: 'http://localhost:3000/api/Article/' + response3.data["_id"],
+                                url: 'http://localhost:1000/gateway/putArticle/' + response3.data["_id"],
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
@@ -291,7 +291,7 @@
             SaveMenu(){
                 let config3 = {
                     method: 'get',
-                    url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                    url: 'http://localhost:1000/gateway/restaurantObj/' + store.state.userId,
                     headers: {}
                 };
                 axios(config3)
@@ -307,7 +307,7 @@
 
                             var config1 = {
                                 method: 'post',
-                                url: 'http://localhost:3000/api/Menu/' + response3.data["_id"],
+                                url: 'http://localhost:1000/gateway/postMenu/' + response3.data["_id"],
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
@@ -338,7 +338,7 @@
 
                             var config2 = {
                                 method: 'put',
-                                url: 'http://localhost:3000/api/Menu/' + response3.data["_id"],
+                                url: 'http://localhost:1000/gateway/putMenu/' + response3.data["_id"],
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
@@ -415,7 +415,7 @@
             DeleteArticle() {
                 let config = {
                     method: 'get',
-                    url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                    url: 'http://localhost:1000/gateway/restaurantObj/' + store.state.userId,
                     headers: {}
                 };
                 axios(config)
@@ -426,7 +426,7 @@
 
                         var config2 = {
                             method: 'delete',
-                            url: 'http://localhost:3000/api/Article/' + response.data["_id"],
+                            url: 'http://localhost:1000/gateway/deleteArticle/' + response.data["_id"],
                             headers: {
                                 'Content-Type': 'application/json'
                             },
@@ -450,7 +450,7 @@
             DeleteMenu(){
                  let config = {
                     method: 'get',
-                    url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                    url: 'http://localhost:1000/gateway/restaurantObj/' + store.state.userId,
                     headers: {}
                 };
                 axios(config)
@@ -461,7 +461,7 @@
 
                         var config2 = {
                             method: 'delete',
-                            url: 'http://localhost:3000/api/Menu/' + response.data["_id"],
+                            url: 'http://localhost:1000/gateway/deleteMenu/' + response.data["_id"],
                             headers: {
                                 'Content-Type': 'application/json'
                             },
@@ -488,7 +488,7 @@
                 if (store.state.userId != 0) {
                     let config = {
                         method: 'get',
-                        url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                        url: 'http://localhost:1000/gateway/restaurantObj/' + store.state.userId,
                         headers: {}
                     };
 
@@ -503,7 +503,7 @@
 
                                 let config2 = {
                                     method: 'post',
-                                    url: 'http://localhost:3000/api/Restaurant/',
+                                    url: 'http://localhost:1000/gateway/postRestaurant/',
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
@@ -517,7 +517,7 @@
                                         });
                                         let config3 = {
                                             method: 'put',
-                                            url: 'http://localhost:3000/api/Restaurant/' + store.state
+                                            url: 'http://localhost:1000/gateway/putRestaurant/' + store.state
                                                 .userId,
                                             headers: {
                                                 'Content-Type': 'application/json'
@@ -541,7 +541,7 @@
                                 });
                                 let config4 = {
                                     method: 'put',
-                                    url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                                    url: 'http://localhost:1000/gateway/putRestaurant/' + store.state.userId,
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
@@ -565,7 +565,7 @@
                 if (store.state.userId != 0) {
                     let config = {
                         method: 'get',
-                        url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                        url: 'http://localhost:1000/gateway/restaurantObj/' + store.state.userId,
                         headers: {}
                     };
                     axios(config)
@@ -584,14 +584,14 @@
 
                     let config = {
                         method: 'get',
-                        url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                        url: 'http://localhost:1000/gateway/restaurantObj/' + store.state.userId,
                         headers: {}
                     };
                     axios(config)
                         .then((response) => {
                             let config2 = {
                                 method: 'get',
-                                url: 'http://localhost:3000/api/Menu/' + response.data["_id"],
+                                url: 'http://localhost:1000/gateway/menu/' + response.data["_id"],
                             };
                             axios(config2)
                                 .then((response2) => {
@@ -612,14 +612,14 @@
 
                     let config = {
                         method: 'get',
-                        url: 'http://localhost:3000/api/RestaurantObj/' + store.state.userId,
+                        url: 'http://localhost:1000/gateway/restaurantObj/' + store.state.userId,
                         headers: {}
                     };
                     axios(config)
                         .then((response) => {
                             let config2 = {
                                 method: 'get',
-                                url: 'http://localhost:3000/api/Article/' + response.data["_id"],
+                                url: 'http://localhost:1000/gateway/apiArticle/' + response.data["_id"],
                             };
                             axios(config2)
                                 .then((response2) => {

@@ -33,7 +33,7 @@
                     .then(() => {
                         let config2 = {
                             method: 'delete',
-                            url: 'http://localhost:3000/api/Restaurant/' + store.state.userId,
+                            url: 'http://localhost:1000/gateway/deleteRestaurant/' + store.state.userId,
                             headers: {}
                         };
                         axios(config2).then(() => {

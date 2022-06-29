@@ -72,7 +72,7 @@
 
         mounted(){
             console.log(this.content._id)
-            axios.get('http://localhost:3000/api/Article/'+this.content._id)
+            axios.get('http://localhost:1000/gateway/apiArticle/'+this.content._id)
                 .then(response => {
                     console.log(response.data)
                     this.meals = response.data
