@@ -242,7 +242,6 @@
                                     this.MyCmd = response.data
                                     this.MyCmd.forEach(cmd => cmd.dateTimeCommander = moment(cmd
                                         .dateTimeCommander).format('MMMM Do YYYY, h:mm:ss a'))
-                                    console.log(this.MyCmd)
                                 })
                                 .catch((error) => {
                                     console.log(error);
@@ -254,7 +253,6 @@
                 }
             },
             OpenDialog(Status, Prix, Description, Article, dateTimeCommander, dateTimeLivreur, dateTimeRecu, CmdId) {
-                console.log(store.state.userRole)
                 this.CmdStatus = Status
                 this.CmdPrix = Prix
                 this.CmdDescription = Description
