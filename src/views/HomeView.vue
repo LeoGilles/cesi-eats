@@ -114,10 +114,10 @@
                 width: 500px;
                 min-width: 300px;
                 border-radius: 10px;
-                border-color: #2c3e50;
                 display: flex;
                 border-width: 1px;
                 font-size: 25px;
+                border:  1px solid #2c3e50;
             }
 
         }
@@ -132,10 +132,13 @@
         .home {
             .come {
 
-                .searchRestaurant {
+                .searchRestaurant:before {
                     min-width: 300px;
                 }
 
+                input{
+
+                }
             }
 
             .bestProducts {

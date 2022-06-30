@@ -1,7 +1,7 @@
 <template>
     <h2>Livraison en cours</h2>
     {{livraisonEnCours}}
-    <button class="livraisonPageCmdFinish" @click="deliveryFinish()">Commande donné au client</button>
+    <v-btn variant="outlined" color="teal" @click="deliveryFinish()">Commande donné au client</v-btn>
 </template>
 
 <script>
