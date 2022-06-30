@@ -111,11 +111,8 @@
             .searchRestaurant {
                 margin: 20px 0;
                 padding: 10px;
-                width: 500px;
-                min-width: 300px;
                 border-radius: 10px;
                 display: flex;
-                border-width: 1px;
                 font-size: 25px;
                 border:  1px solid #2c3e50;
             }
@@ -170,6 +167,7 @@
                 .searchRestaurant {
                     min-width: 300px;
                     display: flex;
+                    width: 500px;
                 }
 
             }

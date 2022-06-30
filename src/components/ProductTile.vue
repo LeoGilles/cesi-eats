@@ -6,8 +6,8 @@
         <p class="ingredient">Ingrédients : {{content.Description}}</p>
         <p class="price">Price : {{content.Prix}}€</p>
         <div class="add">
-            <button class="addToCart" v-on:click="addArticle(content)">Add <font-awesome-icon icon="fa-plus" style="color:lime;" />
-
+            <button class="addToCart" v-on:click="addArticle(content)">
+                <img :src="this.addToCart" alt="Ajouter au panier" title="Ajouter au panier">
             </button>
 
         </div>
@@ -23,7 +23,8 @@
         props: ['content'],
         data(){
             return{
-                cart: store.getters.getCart
+                cart: store.getters.getCart,
+                addToCart: require('@/assets/add-to-cart.png')
             }
         },
         methods: {
