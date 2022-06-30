@@ -98,7 +98,7 @@
                             this.$notify({text: 'Nous sommes désolé, une erreur s\'est produite', type: 'error'})
                             console.log(error);
                         });
-                  //  this.$router.push({name: '/suivi', params: { cmdNum: "bar"}})
+                    this.$router.push({name: '/suivi'})
                 }else if(this.cart.length === 0)
                     this.$notify({text: 'Le pannier est vide', type: 'warn'})
                 else if(this.isOrderInProgress === true)
