@@ -5,6 +5,7 @@
         <div class="commercialViewBtn">
             <button v-on:click="openMenuCommercial('gestionClient')">Gestion clients</button>
             <button v-on:click="openMenuCommercial('dashaboard')">Dashaboard</button>
+           <v-btn href="/ShareDev/UserNotifications.vue" download>Télécharger le composant partagé</v-btn>
         </div>
         <management-client :style="!clientButton ? buttonNav : null" />
         <dashboard-command :style="!dashboardButton ? buttonNav : null" />
