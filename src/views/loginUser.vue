@@ -135,6 +135,7 @@
                 axios(config)
                     .then(() => {
                             this.$router.push("/")
+                            //notif user crée
                     })
                     .catch(function (error) {
                         console.log(error);

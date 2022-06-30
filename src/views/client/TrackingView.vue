@@ -129,11 +129,13 @@
                     </div>
                 </v-card-text>
                 <v-card-actions>
+                    <div v-if="role == 3">
                     <v-btn color="dark-green" v-if="CmdStatus == 1" @click="AcceptCmd(this.CmdId)">Accepter la Commande
                     </v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="green" v-if="CmdStatus == 2" @click="ValidateCmd(this.CmdId)">Envoyer la Commande
                     </v-btn>
+                    </div>
                     <v-btn color="blue-darken-1" text @click="CloseDialog">
                         Close
                     </v-btn>

@@ -29,7 +29,7 @@
         methods: {
             refreshCommand() {
                 if (this.role == 1) {
-                    axios.get('http://localhost:1000/gateway/api/commande/client/now/' + store.state.userId)
+                    axios.get('http://localhost:1000/gateway/api/commande/client/' + store.state.userId)
                         .then((response) => {
                             this.historyCmd = response.data
                             this.historyCmd.forEach(cmd => {

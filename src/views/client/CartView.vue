@@ -83,7 +83,7 @@
                 //     })
                 if (this.cart.length>0 && this.isOrderInProgress===false){
                     axios.post('http://localhost:1000/gateway/api/postCommande/', {
-                        ClientId: 1,
+                        ClientId: store.state.userId,
                         RestaurantId: this.cart[0].RestaurantId,
                         Prix: this.totalToPaid(),
                         Description: "z",
