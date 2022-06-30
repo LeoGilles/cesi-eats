@@ -48,7 +48,7 @@
                                     </div>
                                 </v-timeline-item>
 
-                                <v-timeline-item v-if="CmdStatus>=3" dot-color="pink" size="small">
+                                <v-timeline-item v-if="CmdStatus>=4" dot-color="pink" size="small">
                                     <div class="d-flex">
                                         <strong class="mr-4">{{CmddateTimeLivreur}}</strong>
                                         <div>
@@ -57,11 +57,19 @@
                                     </div>
                                 </v-timeline-item>
 
-                                <v-timeline-item v-if="CmdStatus>=4" dot-color="teal-lighten-3" size="small">
+                                <v-timeline-item v-if="CmdStatus>=5" dot-color="teal-lighten-3" size="small">
+                                    <div class="d-flex">
+                                        <strong class="mr-4">Le livreur est arrivé</strong>
+                                        <div>
+                                            <strong>Le livreur vous attend devant la porte</strong>
+                                        </div>
+                                    </div>
+                                </v-timeline-item>
+                                <v-timeline-item v-if="CmdStatus>=6" dot-color="teal-lighten-3" size="small">
                                     <div class="d-flex">
                                         <strong class="mr-4">{{CmddateTimeRecu}}</strong>
                                         <div>
-                                            <strong>Le livreur vous attend devant la porte</strong>
+                                            <strong>Commande Recu</strong>
                                             <div class="text-caption">
                                                 Bonne appetit !
                                             </div>
@@ -92,7 +100,21 @@
                                     Veuillez Patientez
                                 </v-card-subtitle>
                             </div>
+
                             <div v-if="CmdStatus == 3">
+                                <v-img
+                                        src=""
+                                        height="200px">
+                                </v-img>
+                                <v-card-title>
+                                    Le Livreur a accepté la commande
+                                </v-card-title>
+                                <v-card-subtitle>
+                                    Il est en route
+                                </v-card-subtitle>
+                            </div>
+
+                            <div v-if="CmdStatus == 4">
                                 <v-img
                                         src="https://foodservices1.files.wordpress.com/2020/12/food-delivery-lapd.gif?w=640"
                                         height="200px">

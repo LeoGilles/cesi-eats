@@ -1,5 +1,5 @@
 <template>
-    <div class="dashboardCommand">
+    <div class="dashboardCommand" >
         <tile-management class="item-a" v-bind:stat="totalCmd" v-bind:title="'Total des commandes passées'"/>
         <tile-management class="item-b" v-bind:stat="totalCmdLivre" v-bind:title="'Total des commandes livrées'"/>
         <tile-management class="item-c" v-bind:stat="totalCmdNonLivre" v-bind:title="'Total des commandes pas encorelivrées'"/>
@@ -13,6 +13,7 @@
 
 <script>
     import TileManagement from "./TileManagement";
+    import store from '../../store'
     import axios from 'axios'
 
     export default {
@@ -26,6 +27,7 @@
                 meanCart: null,
                 totalCmdEnPrep: null,
                 totalCmdEnLivraison: null,
+                role: 0,
             }
         },
         methods:{
@@ -94,6 +96,20 @@
 
         },
         mounted(){
+                            let config2 = {
+                method: 'get',
+                url: 'http://localhost:10432/api/Users/' + store.state.userId,
+                headers: {}
+            };
+
+            axios(config2)
+                .then((response2) => {                   
+                    store.commit('SetUserRole', response2.data[0]["Roles"])
+                    this.role = store.state.userRole
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             this.getTotalCmd()
             this.getTotalCmdLivre()
             this.getTotalCmdNonLivre()

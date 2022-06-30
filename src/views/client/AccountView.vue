@@ -8,6 +8,8 @@
                 <button v-on:click="openMenuAccount('refer')">Parrainer un ami</button>
                 <router-link to="/RestaurateurPage" v-if="this.role == 3"><button>Gerer mon restaurant</button>
                 </router-link>
+                <router-link to="/LivraisonPage" v-if="this.role == 2"><button>Service Livreur</button></router-link>
+                <router-link to="/commercial" v-if="this.role == 4"><button>Service Commercial</button></router-link>
                 <router-link to="/orders">
                     <button>Votre historique de commandes</button>
                 </router-link>

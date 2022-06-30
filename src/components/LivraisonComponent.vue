@@ -39,7 +39,7 @@
 
 <script>
     import axios from 'axios'
-
+    import store from '../store'
     export default {
         name: "LivraisonComponent",
         props: {
@@ -56,7 +56,7 @@
                 if(this.alreadyInDelivery){
                     this.$notify({text: "Veuillez finir votre commande actuelle avant d'en accepter une autre", type: "warn"})
                 }else{
-                    axios.put('http://localhost:1000/gateway/api/changeStatusCommande/'+this.tab_livraison._id, {Status: 4, LivreurId: 12})
+                    axios.put('http://localhost:1000/gateway/api/changeStatusCommande/'+this.tab_livraison._id, {Status: 4, LivreurId: store.state.userId})
                         .then(response => {
                             // this.popularRestaurants = response.data
                             console.log(response.data)
@@ -72,7 +72,7 @@
             },
         },
         mounted(){
-            axios.get('http://localhost:4000/api/commande/commandeLivreur/'+12)
+            axios.get('http://localhost:4000/api/commande/commandeLivreur/'+store.state.userId)
                 .then(response => {
                     console.log(response.data)
                     if(response.data>0)

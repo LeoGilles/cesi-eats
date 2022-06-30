@@ -1,5 +1,5 @@
 <template>
-    <div class="managementClient">
+    <div class="managementClient" v-if="role == 4">
         <v-card class="d-flex justify-start pa-2 mb-6 align-center outlined tile" v-for="User in Users" :key="User">
             <v-text-field v-model="User.UsersName" label="Nom" class="mr-6" style=" width: 150px;"></v-text-field>
             <v-text-field v-model="User.UsersMail" label="Mail" class="mr-6" style=" width: 250px;"></v-text-field>
@@ -15,11 +15,13 @@
 
 <script>
     import axios from 'axios';
+    import store from '../../store'
     export default {
         name: "ManagementClient",
         data() {
             return {
                 Users: [{}],
+                role: 0,
             }
         },
         methods: {
@@ -95,6 +97,21 @@
             }
         },
         mounted() {
+            
+                let config2 = {
+                method: 'get',
+                url: 'http://localhost:10432/api/Users/' + store.state.userId,
+                headers: {}
+            };
+
+            axios(config2)
+                .then((response2) => {                   
+                    store.commit('SetUserRole', response2.data[0]["Roles"])
+                    this.role = store.state.userRole
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             this.refresh()
         },
 
