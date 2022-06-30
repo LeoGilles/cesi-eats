@@ -188,4 +188,32 @@
         }
 
     }
+
+    @media screen and (max-width: 1150px) {
+        .home{
+            .come{
+                h1{
+                    font-size: 60px;
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 1000px) {
+        .home{
+            .come{
+                h1{
+                    font-size: 45px;
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 850px) {
+        .home{
+            .come{
+                h1{
+                    font-size: 30px;
+                }
+            }
+        }
+    }
 </style>

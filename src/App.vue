@@ -1,11 +1,10 @@
 <template>
   <nav>
-    <router-link to="/">Cesi Eats</router-link>
+    <router-link class="name_business" to="/">Cesi Ton Gras</router-link>
 
-    <input placeholder="Restaurant, type, ..." type="text">
-    <input placeholder="Adresse" type="text">
+    <input class="search-adresse" placeholder="Adresse" type="text">
     <div class="nav">
-      <div v-if="this.token == '' || this.token == null ">
+      <div class="log" v-if="this.token == '' || this.token == null ">
         <v-btn @click="RedirectLogIn" color="#4D90A0" dark>
            <span class="text-white">Log In</span>
         </v-btn>
@@ -28,10 +27,10 @@
     </div>
 
     <div class="nav-links">
-      <router-link to="/cart">Panier</router-link>
+      <router-link to="/cart"><font-awesome-icon icon="bars" class="menu-icon"/>Panier</router-link>
       <router-link to="/suivi">Suivre vos commandes</router-link>
     </div>
-    <img src="./assets/icons8-menu-30.png" alt="">
+    <font-awesome-icon icon="bars" class="menu-icon"/>
   </nav>
   <router-view @message="setMessage" />
   <div>
@@ -55,7 +54,9 @@
     padding: 30px;
     box-shadow: 0px 10px 10px -3px grey;
   }
-
+ .menu-icon{
+  display: none;
+ }
 
 .flexHori{
   display: flex;
@@ -95,18 +96,35 @@
   }
 
   nav a.router-link-exact-active {
-    color: #42b983;
+    color: #4D90A0;
   }
 
-  @media screen and (max-width: 850px) {
+
+ @media screen and (max-width: 750px) {
+
     .nav-links{
-      display: none;
+      display: flex;
+      flex-direction: column;
+      font-size: small;
     }
+
   }
-  @media screen and (max-width: 510px) {
-    .nav{
+  @media screen and (max-width: 580px) {
+    .search-adresse{
       display: none;
     }
+    .nav-links{
+      display: flex;
+      flex-direction: column;
+      font-size: small;
+    }
+    .log{
+      font-size: xx-small;
+    }
+    nav a.router-link-exact-active {
+    color: #4D90A0;
+    font-size: 15px;
+  }
   }
 </style>
 <script>
@@ -145,7 +163,7 @@
         this.token = store.state.token
         this.DecodeToken()
       }
-    },
+  },
     methods: {
       LogOut() {
         store.commit('deltoken')
