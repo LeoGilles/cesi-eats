@@ -70,7 +70,6 @@
         },
         methods: {
             acceptLivraison() {
-                console.log(this.tab_livraison)
                 if (this.alreadyInDelivery) {
                     this.$notify({
                         text: "Veuillez finir votre commande actuelle avant d'en accepter une autre",
@@ -97,9 +96,8 @@
         },
         mounted() {
             //recupere si le livreur a un commande en cours
-            axios.get('http://localhost:1000/gateway/api/commandeLivreur/' +store.state.userId)
+            axios.get('http://localhost:1000/gateway/api/commandeLivreur/' +12)
                 .then(response => {
-                    console.log(response.data)
                     if (response.data > 0)
                         this.alreadyInDelivery = true
                     else

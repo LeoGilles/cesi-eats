@@ -25,7 +25,6 @@
         mounted() {
             axios.get('http://localhost:1000/gateway/api/commande/status/' + 3)
                 .then((response) => {
-                    console.log(response.data);
                     this.livraisons = response.data;
                 })
                 .catch((error) => {
