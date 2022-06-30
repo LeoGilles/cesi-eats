@@ -28,7 +28,7 @@
     </div>
 
     <router-link to="/cart">Panier</router-link>
-    <router-link to="/suivi">suivicmd</router-link>
+    <router-link to="/suivi">Suivre vos commandes</router-link>
     <router-link to="/LivraisonPage">Livreur</router-link>
   </nav>
   <router-view @message="setMessage" />
