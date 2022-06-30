@@ -15,7 +15,7 @@
         </div>
         <div class="importantLinks links">
             <router-link to="/politique">Politique de confidentialité</router-link>
-            <router-link to="">Conditions</router-link>
+            <router-link to="/condition">Conditions</router-link>
         </div>
 
     </div>
