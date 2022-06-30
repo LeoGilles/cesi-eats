@@ -1,16 +1,11 @@
 <template>
     <div class="livraison--component">
-        <div class="color--bar">
 
-        </div>
         <div class="wrapper">
             <div class="restaurant--part">
-                <div class="title--restaurant">
-                    <h2 class="title">Restaurant</h2>
-                </div>
+                <h3 class="livraison--componentTitle">{{this.restaurant.Nom}}</h3>
                 <div class="wrapper--text">
-                    <p class="Adresse--restaurant">Adresse du restaurant de la commande</p>
-                    <p class="nom--restaurant">Nom du Restaurant</p>
+                    <p class="Adresse--restaurant">{{this.restaurant.Adresse}}e</p>
                     <p class="estimation--temps">{{tab_livraison.Description}}</p>
                 </div>
             </div>
@@ -34,29 +29,58 @@
             </div>
         </div>
 
+        <!--        <div class="restaurant&#45;&#45;part">-->
+        <!--            <h3 class="livraison&#45;&#45;componentTitle">Restaurant</h3>-->
+        <!--            <div class="wrapper&#45;&#45;text">-->
+        <!--                <p class="Adresse&#45;&#45;restaurant">Adresse du restaurant de la commande</p>-->
+        <!--                <p class="nom&#45;&#45;restaurant">Nom du Restaurant</p>-->
+        <!--                <p class="estimation&#45;&#45;temps">{{tab_livraison.Description}}</p>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <!--        <div class="client&#45;&#45;part">-->
+        <!--            <div class="title&#45;&#45;client">-->
+        <!--                <h2 class="title">Client</h2>-->
+        <!--            </div>-->
+        <!--            <div class="wrapper&#45;&#45;text">-->
+        <!--                <p class="adresse&#45;&#45;client">Adresse du client de la commande</p>-->
+        <!--                <p class="nom&#45;&#45;client">Nom du Client</p>-->
+        <!--                <p class="estimation&#45;&#45;temps">Estimation du temps</p>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
     </div>
+
+
 </template>
 
 <script>
     import axios from 'axios'
-    import store from '../store'
+
     export default {
         name: "LivraisonComponent",
-        props: {
-            tab_livraison: Object,
-        },
-        data(){
-            return{
-                alreadyInDelivery: false
+        props: [
+            'tab_livraison'
+        ],
+        data() {
+            return {
+                alreadyInDelivery: false,
+                restaurant: 'null'
             }
         },
         methods: {
             acceptLivraison() {
                 console.log(this.tab_livraison)
-                if(this.alreadyInDelivery){
-                    this.$notify({text: "Veuillez finir votre commande actuelle avant d'en accepter une autre", type: "warn"})
-                }else{
-                    axios.put('http://localhost:1000/gateway/api/changeStatusCommande/'+this.tab_livraison._id, {Status: 4, LivreurId: store.state.userId})
+                if (this.alreadyInDelivery) {
+                    this.$notify({
+                        text: "Veuillez finir votre commande actuelle avant d'en accepter une autre",
+                        type: "warn"
+                    })
+                } else {
+                    axios.put('http://localhost:1000/gateway/api/changeStatusCommande/' + this.tab_livraison._id, {
+                        Status: 4,
+                        LivreurId: 12
+                    })
                         .then(response => {
                             // this.popularRestaurants = response.data
                             console.log(response.data)
@@ -71,11 +95,12 @@
 
             },
         },
-        mounted(){
-            axios.get('http://localhost:4000/api/commande/commandeLivreur/'+store.state.userId)
+        mounted() {
+            //recupere si le livreur a un commande en cours
+            axios.get('http://localhost:1000/gateway/api/commandeLivreur/' +store.state.userId)
                 .then(response => {
                     console.log(response.data)
-                    if(response.data>0)
+                    if (response.data > 0)
                         this.alreadyInDelivery = true
                     else
                         this.alreadyInDelivery = false
@@ -83,6 +108,17 @@
                 .catch(error => {
                     console.log(error)
                 })
+            if(this.tab_livraison.RestaurantId){
+                axios.get('http://localhost:1000/gateway/restaurant/' + this.tab_livraison.RestaurantId)
+                    .then(response => {
+                        this.restaurant = response.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }else
+                this.$notify({text:'Desole une erreur c\'est produite', type: 'warn'})
+
         }
     }
 </script>
@@ -98,20 +134,13 @@
         text-justify: inter-word;
     }
 
-    h2 {
-        font-size: 1em;
-        text-align: justify;
-        text-justify: inter-word;
-        padding-left: 10px;
-    }
 
     .livraison--component {
         margin-bottom: 5px;
+        border-top: 1px solid #4D90A0;
 
-        .color--bar {
-            background-color: #5d99a7;
-            height: 2px;
-            width: 100%;
+        .livraison--componentTitle {
+            margin: 10px;
         }
 
         .wrapper {

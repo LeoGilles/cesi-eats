@@ -1,6 +1,6 @@
 <template>
     <div class="article">
-        <img alt="image article" class="imgArticle" :src="content.Img">
+        <img alt="image article" class="imgArticle" src="https://cdn.pixabay.com/photo/2014/10/19/20/59/hamburger-494706_1280.jpg">
 
         <h3 class="titleArticle">{{content.Nom}}</h3>
         <p class="ingredient">Ingrédients : {{content.Description}}</p>
@@ -46,14 +46,14 @@
         background-color: rgba(193, 193, 193, .34);
         border-radius: 20px;
         padding: 60px 30px 30px 30px;
-        margin: 50px;
+        margin: 70px;
         min-width: 200px;
         max-width: 250px;
     }
 
     .imgArticle {
         position: absolute;
-        top: -15%;
+        top: -25%;
         margin-left: auto;
         margin-right: auto;
         left: 0;
