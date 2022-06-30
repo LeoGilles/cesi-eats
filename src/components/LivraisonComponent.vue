@@ -56,7 +56,7 @@
 
 <script>
     import axios from 'axios'
-
+    import store from "../store";
     export default {
         name: "LivraisonComponent",
         props: [
@@ -96,7 +96,7 @@
         },
         mounted() {
             //recupere si le livreur a un commande en cours
-            axios.get('http://localhost:1000/gateway/api/commandeLivreur/' +12)
+            axios.get('http://localhost:1000/gateway/api/commandeLivreur/' +store.state.userId)
                 .then(response => {
                     if (response.data > 0)
                         this.alreadyInDelivery = true
