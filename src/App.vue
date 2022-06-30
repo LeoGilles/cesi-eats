@@ -4,7 +4,7 @@
 
     <input placeholder="Restaurant, type, ..." type="text">
     <input placeholder="Adresse" type="text">
-    <div>
+    <div class="nav">
       <div v-if="this.token == '' || this.token == null ">
         <v-btn @click="RedirectLogIn" color="#4D90A0" dark>
            <span class="text-white">Log In</span>
@@ -27,8 +27,11 @@
       </div>
     </div>
 
-    <router-link to="/cart">Panier</router-link>
-    <router-link to="/suivi">Suivre vos commandes</router-link>
+    <div class="nav-links">
+      <router-link to="/cart">Panier</router-link>
+      <router-link to="/suivi">Suivre vos commandes</router-link>
+    </div>
+    <img src="./assets/icons8-menu-30.png" alt="">
   </nav>
   <router-view @message="setMessage" />
   <div>
@@ -93,6 +96,17 @@
 
   nav a.router-link-exact-active {
     color: #42b983;
+  }
+
+  @media screen and (max-width: 850px) {
+    .nav-links{
+      display: none;
+    }
+  }
+  @media screen and (max-width: 510px) {
+    .nav{
+      display: none;
+    }
   }
 </style>
 <script>

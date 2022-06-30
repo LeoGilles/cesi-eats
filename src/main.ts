@@ -4,12 +4,13 @@ import router from './router'
 //import store from './store'
 import vuetify from './plugins/vuetify'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faDeleteLeft,faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faDeleteLeft,faPlus, faHamburger } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Notifications from '@kyvg/vue3-notification'
 
 library.add(faDeleteLeft)
 library.add(faPlus)
+library.add(faHamburger)
 
 const store = require('./store')
 
