@@ -1,11 +1,11 @@
 <template>
     <div class="footer">
         <div class="logo">
-            <h1>Cesi ton gras</h1>
+            <h1><router-link to="/" class="footerNameSite">Cesi ton gras</router-link> </h1>
             <div class="socialMedia">
-                <img alt="twitter" src="">
-                <img alt="facebook" src="">
-                <img alt="linkedin" src="">
+                <a href="http://example.com"><img alt="twitter" title="twitter" :src="twitter"></a>
+                <a href="http://example.com"><img alt="facebook" title="facebook" :src="facebook"></a>
+                <a href="http://example.com"><img alt="linkedin" title="linkedin" :src="linkedin"></a>
             </div>
         </div>
         <div class="shortcuts links">
@@ -14,7 +14,7 @@
             <router-link to="">Devenez coursier-partenaire</router-link>
         </div>
         <div class="importantLinks links">
-            <router-link to="">Politique de confidentialité</router-link>
+            <router-link to="/politique">Politique de confidentialité</router-link>
             <router-link to="">Conditions</router-link>
         </div>
 
@@ -23,7 +23,14 @@
 
 <script>
     export default {
-        name: "FooterComponent"
+        name: "FooterComponent",
+        data(){
+            return{
+                twitter: require('@/assets/footer/twitter.png'),
+                facebook: require('@/assets/footer/facebook.png'),
+                linkedin: require('@/assets/footer/linkedin.png'),
+            }
+        }
     }
 </script>
 
@@ -34,14 +41,22 @@
         padding-bottom: 50px;
         border-top: 1px solid #4D90A0;
 
+        .footerNameSite{
+            text-decoration: none;
+            color: black;
+        }
 
         .logo {
             .socialMedia {
                 display: flex;
+                align-items: center;
 
 
                 img {
-                    height: 30px;
+                    padding: 5px;
+                    height: 32px;
+                    width: 32px;
+
                 }
             }
         }
