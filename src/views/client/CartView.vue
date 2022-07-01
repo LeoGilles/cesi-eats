@@ -142,7 +142,7 @@
             }
         },
         mounted(){
-            axios.get('http://localhost:1000/gateway/api/commande/client/now/'+123)
+            axios.get('http://localhost:1000/gateway/api/commande/client/now/'+store.state.userId)
                 .then(response => {
                     // this.popularRestaurants = response.data
                     const cmdParClient=response.data
