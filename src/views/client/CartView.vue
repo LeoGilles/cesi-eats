@@ -168,7 +168,6 @@
             .deliveryAdresse {
                 display: flex;
                 justify-content: space-between;
-                width: 500px;
                 border-bottom: 1px solid #4D90A0;
 
                 button {
@@ -205,7 +204,6 @@
         }
 
         .total {
-            width: 500px;
             background-color: rgba(77, 144, 160, .5);
             border-radius: 20px;
             margin: 10px;
@@ -246,16 +244,41 @@
         }
     }
 
+    @media (max-width: 600px) {
+        .cart {
+            .deliveryAdresse{
+                width: 100px;
+            }
+            .total{
+                width: 100px;
+            }
+        }
+
+    }
+
     @media (max-width: 899px) {
         .cart {
-
+            .deliveryAdresse{
+                width: 300px;
+            }
+            .total{
+                width: 300px;
+            }
         }
+
     }
 
     @media (min-width: 900px) {
         .cart {
+            .deliveryAdresse{
+                width: 500px;
+            }
             display: flex;
             justify-content: space-between;
+
+            .total{
+                width: 500px;
+            }
         }
     }
 </style>

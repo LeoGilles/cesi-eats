@@ -106,16 +106,7 @@
 
     Comment nous protégeons vos données personnelles
 
-    ___________________________________________________________
-    ___________________________________________________________
-    ___________________________________________________________
-    ___________________________________________________________
-    ___________________________________________________________
-    ___________________________________________________________
-    ___________________________________________________________
-    ___________________________________________________________
-    ___________________________________________________________
-    ___________________________________________________________
+
 
 
     Alors que nous prenons toutes les précautions raisonnables pour nous assurer que nos données d’utilisateur sont sécurisées et que les utilisateurs sont protégés, il reste toujours du risque de préjudice. L’Internet en sa totalité peut être, parfois, peu sûr et donc nous sommes incapables de garantir la sécurité des données des utilisateurs au-delà de ce qui est raisonnablement pratique.
